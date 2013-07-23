@@ -1,0 +1,11 @@
+# ignorar arquivos swap do vim
+*~
+
+# ignorar arquivos de swap do kate
+*.kate-swp
+
+# ignorar arquivos DS_Store do Mac
+*.DS_Store
+
+# ignorar arquivos .pyc (compilados do python)
+*.pyc
