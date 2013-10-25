@@ -15,8 +15,8 @@ def unescape(value):
 ### source and destination for writing and receiving the data
 class SmarttSimpleProtocol(object):
     # Protocol specific characters
-    SEPARATOR_CHAR = ";"
-    END_OF_MESSAGE_CHAR = "$"
+    SEPARATOR_CHAR = b";"
+    END_OF_MESSAGE_CHAR = b"$"
     # Encoding of string data sent by the server
     SERVER_ENCODING = "latin1"
     # Encoding used by this client
@@ -30,7 +30,7 @@ class SmarttSimpleProtocol(object):
                  print_raw_messages=False):
         self.read_function = read_function
         self.write_function = write_function
-        self.data_buffer = ""
+        self.data_buffer = b""
         self.print_raw_messages = print_raw_messages
 
     ### Sending function - sends a message according to the protocol; just
@@ -38,14 +38,14 @@ class SmarttSimpleProtocol(object):
     ### separator and '$' as the end of message character
     def send(self, message):
         # Escape all tokens
-        escaped_message = [escape(token) for token in message]
+        escaped_message = [escape(token).encode(self.SERVER_ENCODING) for token in message]
 
         # Join tokens and append end of message character
         formatted_message = (self.SEPARATOR_CHAR.join(escaped_message)
                              + self.END_OF_MESSAGE_CHAR)
 
         if self.print_raw_messages:
-            print formatted_message
+            print(formatted_message)
 
         self.write_function(formatted_message)
 
@@ -69,16 +69,17 @@ class SmarttSimpleProtocol(object):
         self.data_buffer = self.data_buffer[terminator_index + 1:]
 
         # Handle data encoding
-        data = unicode(data.decode(self.SERVER_ENCODING)) \
-            .encode(self.CLIENT_ENCODING)
+        data = str(data.decode(self.SERVER_ENCODING))
 
         if self.print_raw_messages:
-            print data + "$"
+            print(data + "$")
 
         if len(data) == 0:
             return []
 
         # Split message, unescape tokens and return
-        return [unescape(token) for token in data.split(self.SEPARATOR_CHAR)]
+        return [unescape(token)
+                for token in data.split(
+                    self.SEPARATOR_CHAR.decode("utf8"))]
 
 ##############################################################################

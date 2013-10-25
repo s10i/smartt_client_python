@@ -3,3 +3,5 @@
 # directory - I still don't understand how it works
 # Got it from here: https://github.com/srid/modern-package-template
 __import__('pkg_resources').declare_namespace(__name__)
+
+from .smartt_client import SmarttClient  # Export SmarttClient

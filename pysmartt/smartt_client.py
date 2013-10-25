@@ -5,7 +5,7 @@ import ssl
 import select
 
 # Local imports
-from smartt_simple_protocol import SmarttSimpleProtocol
+from .smartt_simple_protocol import SmarttSimpleProtocol
 
 
 class SmarttClientException(BaseException):
@@ -96,8 +96,8 @@ class SmarttClient(object):
 
         if len(response) > 0 and response[0] == "ERROR":
             if len(response) != 2:
-                print "STRANGE! Error response doesn't have 2 values: %s" % \
-                      str(response)
+                print("STRANGE! Error response doesn't have 2 values: %s" %
+                      str(response))
             raise SmarttClientException(response[0] + ": " + response[1])
 
         return response
@@ -209,7 +209,7 @@ class SmarttClient(object):
         return self.formatString(name, value, optional)
 
     def formatDictResponse(self, values, attributes, defaultAttributes=[]):
-        if len(attributes) == 0:
+        if not attributes:
             attributes = defaultAttributes
 
         return dict(zip(attributes, values))
@@ -220,7 +220,7 @@ class SmarttClient(object):
 
         k = len(attributes)
         return [self.formatDictResponse(values[i:i + k], attributes) for i in
-                xrange(0, len(values), k)]
+                range(0, len(values), k)]
 
     ##########################################################################
     ### Smartt functions ###
@@ -236,7 +236,8 @@ class SmarttClient(object):
         message += self.formatString("s10i_login", s10iLogin, optional=False)
         message += self.formatString("s10i_password", s10iPassword, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     logoutAttributes = [
         "message"]
@@ -245,7 +246,8 @@ class SmarttClient(object):
     def logout(self):
         message = ["logout"]
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     loggedAttributes = [
         "message"]
@@ -254,7 +256,8 @@ class SmarttClient(object):
     def logged(self):
         message = ["logged"]
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     getClientAttributes = [
         "natural_person_or_legal_person",
@@ -281,21 +284,21 @@ class SmarttClient(object):
         message = ["get_client"]
         message += self.formatAttributes("return_attributes", returnAttributes, self.getClientAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getClientAttributes)
+        parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getClientAttributes)
+        return parsedResponse
 
     updateClientAttributes = [
         "message"]
 
 
-    def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, nameOrCorporateName = None, gender = None, document = None, email = None, s10iLogin = None, newS10iPassword = None, address = None, number = None, complement = None, neighborhood = None, postalCode = None, city = None, state = None, country = None, birthday = None, mainPhone = None, secondaryPhone = None, company = None):
+    def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, nameOrCorporateName = None, gender = None, email = None, s10iLogin = None, newS10iPassword = None, address = None, number = None, complement = None, neighborhood = None, postalCode = None, city = None, state = None, country = None, birthday = None, mainPhone = None, secondaryPhone = None, company = None):
         message = ["update_client"]
-        message += self.formatString("s10i_password", s10iPassword, optional=True)
+        message += self.formatString("s10i_password", s10iPassword, optional=False)
         message += self.formatBoolean("natural_person_or_legal_person", naturalPersonOrLegalPerson, optional=True)
         message += self.formatString("name_or_corporate_name", nameOrCorporateName, optional=True)
         message += self.formatChar("gender", gender, optional=True)
-        message += self.formatInteger("document", document, optional=False)
-        message += self.formatString("email", email, optional=False)
-        message += self.formatString("s10i_login", s10iLogin, optional=False)
+        message += self.formatString("email", email, optional=True)
+        message += self.formatString("s10i_login", s10iLogin, optional=True)
         message += self.formatString("new_s10i_password", newS10iPassword, optional=True)
         message += self.formatString("address", address, optional=True)
         message += self.formatString("number", number, optional=True)
@@ -310,7 +313,8 @@ class SmarttClient(object):
         message += self.formatString("secondary_phone", secondaryPhone, optional=True)
         message += self.formatString("company", company, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     getClientBrokeragesAttributes = [
         "brokerage_id",
@@ -323,7 +327,8 @@ class SmarttClient(object):
         message += self.formatString("brokerage_login", brokerageLogin, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getClientBrokeragesAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getClientBrokeragesAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getClientBrokeragesAttributes)
+        return parsedResponse
 
     insertClientBrokerageAttributes = [
         "message"]
@@ -336,32 +341,23 @@ class SmarttClient(object):
         message += self.formatString("brokerage_password", brokeragePassword, optional=False)
         message += self.formatString("brokerage_digital_signature", brokerageDigitalSignature, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     updateClientBrokerageAttributes = [
         "message"]
 
 
-    def updateClientBrokerage(self, brokerageId = None, newBrokerageId = None, brokerageLogin = None, brokeragePassword = None, brokerageDigiralSignature = None):
+    def updateClientBrokerage(self, brokerageId = None, newBrokerageId = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
         message = ["update_client_brokerage"]
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
         message += self.formatInteger("new_brokerage_id", newBrokerageId, optional=True)
         message += self.formatString("brokerage_login", brokerageLogin, optional=True)
         message += self.formatString("brokerage_password", brokeragePassword, optional=True)
-        message += self.formatString("brokerage_digiral_signature", brokerageDigiralSignature, optional=True)
+        message += self.formatString("brokerage_digital_signature", brokerageDigitalSignature, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
-
-    deleteClientBrokeragesAttributes = [
-        "message"]
-
-
-    def deleteClientBrokerages(self, brokerageId = None, brokerageLogin = None):
-        message = ["delete_client_brokerages"]
-        message += self.formatInteger("brokerage_id", brokerageId, optional=True)
-        message += self.formatString("brokerage_login", brokerageLogin, optional=True)
-        response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     getStockAttributes = [
         "stock_code",
@@ -383,7 +379,8 @@ class SmarttClient(object):
         message += self.formatString("market_name", marketName, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getStockAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getStockAttributes)
+        parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getStockAttributes)
+        return parsedResponse
 
     sendOrderAttributes = [
         "order_id"]
@@ -401,7 +398,8 @@ class SmarttClient(object):
         message += self.formatString("validity_type", validityType, optional=True)
         message += self.formatDate("validity", validity, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return int(response[1])
+        parsedResponse = int(response[1])
+        return parsedResponse
 
     cancelOrderAttributes = [
         "order_id"]
@@ -411,7 +409,8 @@ class SmarttClient(object):
         message = ["cancel_order"]
         message += self.formatInteger("order_id", orderId, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return int(response[1])
+        parsedResponse = int(response[1])
+        return parsedResponse
 
     changeOrderAttributes = [
         "order_id"]
@@ -423,7 +422,8 @@ class SmarttClient(object):
         message += self.formatInteger("new_number_of_stocks", newNumberOfStocks, optional=True)
         message += self.formatDecimal2("new_price", newPrice, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return int(response[1])
+        parsedResponse = int(response[1])
+        return parsedResponse
 
     getOrdersAttributes = [
         "order_id",
@@ -436,7 +436,7 @@ class SmarttClient(object):
         "market_name",
         "datetime",
         "number_of_stocks",
-        "price",
+        "nominal_price",
         "financial_volume",
         "validity_type",
         "validity",
@@ -458,7 +458,8 @@ class SmarttClient(object):
         message += self.formatString("status", status, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getOrdersAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getOrdersAttributes)
+        return parsedResponse
 
     getOrdersEventsAttributes = [
         "order_id",
@@ -480,7 +481,8 @@ class SmarttClient(object):
         message += self.formatString("event_type", eventType, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersEventsAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getOrdersEventsAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getOrdersEventsAttributes)
+        return parsedResponse
 
     getOrderIdAttributes = [
         "order_id"]
@@ -491,13 +493,14 @@ class SmarttClient(object):
         message += self.formatString("order_id_in_brokerage", orderIdInBrokerage, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return int(response[0])
+        parsedResponse = int(response[0])
+        return parsedResponse
 
     sendStopOrderAttributes = [
         "stop_order_id"]
 
 
-    def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = None, stopOrderType = None, stockCode = None, marketName = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, validAfterMarket = None):
+    def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = None, stopOrderType = None, stockCode = None, marketName = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None):
         message = ["send_stop_order"]
         message += self.formatString("investment_code", investmentCode, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -509,9 +512,9 @@ class SmarttClient(object):
         message += self.formatDecimal2("stop_price", stopPrice, optional=False)
         message += self.formatDecimal2("limit_price", limitPrice, optional=False)
         message += self.formatDate("validity", validity, optional=False)
-        message += self.formatBoolean("valid_after_market", validAfterMarket, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return int(response[1])
+        parsedResponse = int(response[1])
+        return parsedResponse
 
     cancelStopOrderAttributes = [
         "stop_order_id"]
@@ -521,7 +524,22 @@ class SmarttClient(object):
         message = ["cancel_stop_order"]
         message += self.formatInteger("stop_order_id", stopOrderId, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return int(response[1])
+        parsedResponse = int(response[1])
+        return parsedResponse
+
+    changeStopOrderAttributes = [
+        "stop_order_id"]
+
+
+    def changeStopOrder(self, stopOrderId = None, newNumberOfStocks = None, newStopPrice = None, newLimitPrice = None):
+        message = ["change_stop_order"]
+        message += self.formatInteger("stop_order_id", stopOrderId, optional=False)
+        message += self.formatInteger("new_number_of_stocks", newNumberOfStocks, optional=True)
+        message += self.formatDecimal2("new_stop_price", newStopPrice, optional=True)
+        message += self.formatDecimal2("new_limit_price", newLimitPrice, optional=True)
+        response = self.smarttFunction(filter(None, message))
+        parsedResponse = int(response[1])
+        return parsedResponse
 
     getStopOrdersAttributes = [
         "stop_order_id",
@@ -538,7 +556,6 @@ class SmarttClient(object):
         "stop_price",
         "limit_price",
         "validity",
-        "valid_after_market",
         "status",
         "sent_order_id"]
 
@@ -553,7 +570,8 @@ class SmarttClient(object):
         message += self.formatString("status", status, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getStopOrdersAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getStopOrdersAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getStopOrdersAttributes)
+        return parsedResponse
 
     getStopOrdersEventsAttributes = [
         "stop_order_id",
@@ -575,7 +593,8 @@ class SmarttClient(object):
         message += self.formatString("event_type", eventType, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getStopOrdersEventsAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getStopOrdersEventsAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getStopOrdersEventsAttributes)
+        return parsedResponse
 
     getStopOrderIdAttributes = [
         "stop_order_id"]
@@ -586,7 +605,8 @@ class SmarttClient(object):
         message += self.formatString("stop_order_id_in_brokerage", stopOrderIdInBrokerage, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
         response = self.smarttFunction(filter(None, message))
-        return int(response[0])
+        parsedResponse = int(response[0])
+        return parsedResponse
 
     getTradesAttributes = [
         "order_id",
@@ -599,7 +619,7 @@ class SmarttClient(object):
         "market_name",
         "datetime",
         "number_of_stocks",
-        "price",
+        "nominal_price",
         "financial_volume",
         "trading_tax_cost",
         "liquidation_tax_cost",
@@ -613,12 +633,13 @@ class SmarttClient(object):
         message = ["get_trades"]
         message += self.formatInteger("order_id", orderId, optional=True)
         message += self.formatString("investment_code", investmentCode, optional=True)
-        message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+        message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
         message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getTradesAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getTradesAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getTradesAttributes)
+        return parsedResponse
 
     getInvestmentsAttributes = [
         "name",
@@ -636,7 +657,8 @@ class SmarttClient(object):
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getInvestmentsAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getInvestmentsAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getInvestmentsAttributes)
+        return parsedResponse
 
     getReportAttributes = [
         "investment_code",
@@ -704,7 +726,8 @@ class SmarttClient(object):
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getReportAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getReportAttributes)
+        parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getReportAttributes)
+        return parsedResponse
 
     getDailyCumulativePerformanceAttributes = [
         "investment_code",
@@ -717,7 +740,8 @@ class SmarttClient(object):
         message += self.formatString("investment_code", investmentCode, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, [], self.getDailyCumulativePerformanceAttributes)
+        parsedResponse = self.formatDictResponse(response[0:], [], self.getDailyCumulativePerformanceAttributes)
+        return parsedResponse
 
     getDailyDrawdownAttributes = [
         "investment_code",
@@ -730,11 +754,10 @@ class SmarttClient(object):
         message += self.formatString("investment_code", investmentCode, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, [], self.getDailyDrawdownAttributes)
+        parsedResponse = self.formatDictResponse(response[0:], [], self.getDailyDrawdownAttributes)
+        return parsedResponse
 
     getPortfolioAttributes = [
-        "investment_code",
-        "brokerage_id",
         "stock_code",
         "position_type",
         "number_of_stocks",
@@ -748,7 +771,8 @@ class SmarttClient(object):
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getPortfolioAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getPortfolioAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[2:], returnAttributes, self.getPortfolioAttributes)
+        return parsedResponse
 
     getAvailableLimitsAttributes = [
         "spot",
@@ -762,7 +786,8 @@ class SmarttClient(object):
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getAvailableLimitsAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatListOfDictsResponse(response, returnAttributes, self.getAvailableLimitsAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getAvailableLimitsAttributes)
+        return parsedResponse
 
     getSetupsAttributes = [
         "name",
@@ -779,7 +804,7 @@ class SmarttClient(object):
         "position_other_taxes",
         "day_trade_trading_tax",
         "day_trade_liquidation_tax",
-        "day_trade_regiter_tax",
+        "day_trade_register_tax",
         "day_trade_income_tax",
         "day_trade_withholding_income_tax",
         "day_trade_other_taxes",
@@ -794,13 +819,14 @@ class SmarttClient(object):
         message += self.formatString("code", code, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getSetupsAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getSetupsAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getSetupsAttributes)
+        return parsedResponse
 
     updateSetupAttributes = [
         "message"]
 
 
-    def updateSetup(self, code = None, name = None, newCode = None, initialCapital = None, slippage = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionIncomeTax = None, positionWithholdingIncomeTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegiterTax = None, dayTradeIncomeTax = None, dayTradeWithholdingIncomeTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None, leaseTax = None, incomeTaxPayment = None):
+    def updateSetup(self, code = None, name = None, newCode = None, initialCapital = None, slippage = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionIncomeTax = None, positionWithholdingIncomeTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeIncomeTax = None, dayTradeWithholdingIncomeTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None, leaseTax = None, incomeTaxPayment = None):
         message = ["update_setup"]
         message += self.formatString("code", code, optional=False)
         message += self.formatString("name", name, optional=True)
@@ -808,25 +834,26 @@ class SmarttClient(object):
         message += self.formatString("initial_capital", initialCapital, optional=True)
         message += self.formatDecimal2("slippage", slippage, optional=True)
         message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
-        message += self.formatDecimal2("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
-        message += self.formatDecimal2("position_trading_tax", positionTradingTax, optional=True)
-        message += self.formatDecimal2("position_liquidation_tax", positionLiquidationTax, optional=True)
+        message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
+        message += self.formatDecimal6("position_trading_tax", positionTradingTax, optional=True)
+        message += self.formatDecimal6("position_liquidation_tax", positionLiquidationTax, optional=True)
         message += self.formatDecimal2("position_register_tax", positionRegisterTax, optional=True)
         message += self.formatDecimal2("position_income_tax", positionIncomeTax, optional=True)
         message += self.formatDecimal2("position_withholding_income_tax", positionWithholdingIncomeTax, optional=True)
         message += self.formatDecimal2("position_other_taxes", positionOtherTaxes, optional=True)
-        message += self.formatDecimal2("day_trade_trading_tax", dayTradeTradingTax, optional=True)
-        message += self.formatDecimal2("day_trade_liquidation_tax", dayTradeLiquidationTax, optional=True)
-        message += self.formatDecimal2("day_trade_regiter_tax", dayTradeRegiterTax, optional=True)
-        message += self.formatDecimal2("day_trade_income_tax", dayTradeIncomeTax, optional=True)
-        message += self.formatDecimal2("day_trade_withholding_income_tax", dayTradeWithholdingIncomeTax, optional=True)
+        message += self.formatDecimal6("day_trade_trading_tax", dayTradeTradingTax, optional=True)
+        message += self.formatDecimal6("day_trade_liquidation_tax", dayTradeLiquidationTax, optional=True)
+        message += self.formatDecimal6("day_trade_register_tax", dayTradeRegisterTax, optional=True)
+        message += self.formatDecimal6("day_trade_income_tax", dayTradeIncomeTax, optional=True)
+        message += self.formatDecimal6("day_trade_withholding_income_tax", dayTradeWithholdingIncomeTax, optional=True)
         message += self.formatDecimal2("day_trade_other_taxes", dayTradeOtherTaxes, optional=True)
-        message += self.formatDecimal2("iss_tax", issTax, optional=True)
+        message += self.formatDecimal6("iss_tax", issTax, optional=True)
         message += self.formatDecimal2("custody_tax", custodyTax, optional=True)
-        message += self.formatDecimal2("lease_tax", leaseTax, optional=True)
+        message += self.formatDecimal6("lease_tax", leaseTax, optional=True)
         message += self.formatString("income_tax_payment", incomeTaxPayment, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     getFinancialTransactionsAttributes = [
         "financial_transaction_id",
@@ -846,7 +873,8 @@ class SmarttClient(object):
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getFinancialTransactionsAttributes)
         response = self.smarttFunction(filter(None, message))
-        return self.formatDictResponse(response, returnAttributes, self.getFinancialTransactionsAttributes)
+        parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getFinancialTransactionsAttributes)
+        return parsedResponse
 
     insertFinancialTransactionAttributes = [
         "message"]
@@ -862,7 +890,8 @@ class SmarttClient(object):
         message += self.formatDecimal2("operational_tax_cost", operationalTaxCost, optional=False)
         message += self.formatString("description", description, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     updateFinancialTransactionAttributes = [
         "message"]
@@ -879,7 +908,8 @@ class SmarttClient(object):
         message += self.formatDecimal2("operational_tax_cost", operationalTaxCost, optional=True)
         message += self.formatString("description", description, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
     deleteFinancialTransactionsAttributes = [
         "message"]
@@ -891,5 +921,6 @@ class SmarttClient(object):
         message += self.formatString("investment_code", investmentCode, optional=True)
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
         response = self.smarttFunction(filter(None, message))
-        return unicode(response[0])
+        parsedResponse = (response[0])
+        return parsedResponse
 
