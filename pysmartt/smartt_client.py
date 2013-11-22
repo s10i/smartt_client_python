@@ -195,7 +195,7 @@ class SmarttClient(object):
             formattedValue = "0"
         elif value == 1 or value is True or value == falseAndTrueValues[1]:
             formattedValue = "1"
-        else:
+        elif value is not None:
             raise SmarttClientException("Invalid boolean value '" + name +
                                         "': " + value)
 
@@ -277,7 +277,10 @@ class SmarttClient(object):
         "birthday",
         "main_phone",
         "secondary_phone",
-        "company"]
+        "company",
+        "registration_datetime",
+        "plan",
+        "plan_expiration_date"]
 
 
     def getClient(self, returnAttributes = None):
@@ -296,7 +299,7 @@ class SmarttClient(object):
         message += self.formatString("s10i_password", s10iPassword, optional=False)
         message += self.formatBoolean("natural_person_or_legal_person", naturalPersonOrLegalPerson, optional=True)
         message += self.formatString("name_or_corporate_name", nameOrCorporateName, optional=True)
-        message += self.formatChar("gender", gender, optional=True)
+        message += self.formatString("gender", gender, optional=True)
         message += self.formatString("email", email, optional=True)
         message += self.formatString("s10i_login", s10iLogin, optional=True)
         message += self.formatString("new_s10i_password", newS10iPassword, optional=True)
@@ -318,12 +321,14 @@ class SmarttClient(object):
 
     getClientBrokeragesAttributes = [
         "brokerage_id",
+        "cblc_login",
         "brokerage_login"]
 
 
-    def getClientBrokerages(self, brokerageId = None, brokerageLogin = None, returnAttributes = None):
+    def getClientBrokerages(self, brokerageId = None, cblcLogin = None, brokerageLogin = None, returnAttributes = None):
         message = ["get_client_brokerages"]
         message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+        message += self.formatString("cblc_login", cblcLogin, optional=True)
         message += self.formatString("brokerage_login", brokerageLogin, optional=True)
         message += self.formatAttributes("return_attributes", returnAttributes, self.getClientBrokeragesAttributes)
         response = self.smarttFunction(filter(None, message))
@@ -334,9 +339,10 @@ class SmarttClient(object):
         "message"]
 
 
-    def insertClientBrokerage(self, brokerageId = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
+    def insertClientBrokerage(self, brokerageId = None, cblcLogin = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
         message = ["insert_client_brokerage"]
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+        message += self.formatString("cblc_login", cblcLogin, optional=True)
         message += self.formatString("brokerage_login", brokerageLogin, optional=False)
         message += self.formatString("brokerage_password", brokeragePassword, optional=False)
         message += self.formatString("brokerage_digital_signature", brokerageDigitalSignature, optional=False)
@@ -348,10 +354,11 @@ class SmarttClient(object):
         "message"]
 
 
-    def updateClientBrokerage(self, brokerageId = None, newBrokerageId = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
+    def updateClientBrokerage(self, brokerageId = None, newBrokerageId = None, cblcLogin = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
         message = ["update_client_brokerage"]
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
         message += self.formatInteger("new_brokerage_id", newBrokerageId, optional=True)
+        message += self.formatString("cblc_login", cblcLogin, optional=True)
         message += self.formatString("brokerage_login", brokerageLogin, optional=True)
         message += self.formatString("brokerage_password", brokeragePassword, optional=True)
         message += self.formatString("brokerage_digital_signature", brokerageDigitalSignature, optional=True)
