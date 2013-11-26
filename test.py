@@ -5,7 +5,7 @@ import datetime
 import pprint
 from pysmartt import smartt_client
 
-client = smartt_client.SmarttClient(use_ssl=False)
+client = smartt_client.SmarttClient()
 
 print(client.logged())
 

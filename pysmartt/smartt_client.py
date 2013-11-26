@@ -452,7 +452,8 @@ class SmarttClient(object):
         "status",
         "absolute_brokerage_tax_cost",
         "percentual_brokerage_tax_cost",
-        "iss_tax_cost"]
+        "iss_tax_cost",
+        "triggered_stop_order_id"]
 
 
     def getOrders(self, orderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, status = None, returnAttributes = None):
@@ -495,10 +496,13 @@ class SmarttClient(object):
         "order_id"]
 
 
-    def getOrderId(self, orderIdInBrokerage = None, brokerageId = None):
+    def getOrderId(self, orderIdInBrokerage = None, brokerageId = None, stockCode = None, marketName = None, datetime = None):
         message = ["get_order_id"]
         message += self.formatString("order_id_in_brokerage", orderIdInBrokerage, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+        message += self.formatString("stock_code", stockCode, optional=False)
+        message += self.formatString("market_name", marketName, optional=True)
+        message += self.formatDate("datetime", datetime, optional=False)
         response = self.smarttFunction(filter(None, message))
         parsedResponse = int(response[0])
         return parsedResponse
@@ -607,10 +611,13 @@ class SmarttClient(object):
         "stop_order_id"]
 
 
-    def getStopOrderId(self, stopOrderIdInBrokerage = None, brokerageId = None):
+    def getStopOrderId(self, stopOrderIdInBrokerage = None, brokerageId = None, stockCode = None, marketName = None, datetime = None):
         message = ["get_stop_order_id"]
         message += self.formatString("stop_order_id_in_brokerage", stopOrderIdInBrokerage, optional=False)
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+        message += self.formatString("stock_code", stockCode, optional=False)
+        message += self.formatString("market_name", marketName, optional=True)
+        message += self.formatDate("datetime", datetime, optional=False)
         response = self.smarttFunction(filter(None, message))
         parsedResponse = int(response[0])
         return parsedResponse
