@@ -82,7 +82,8 @@ class SmarttClient(object):
         self.port = port
         self.smartt_socket = socket.create_connection((self.host, self.port))
         if use_ssl:
-            self.smartt_socket = ssl.wrap_socket(self.smartt_socket)
+            self.smartt_socket = ssl.wrap_socket(self.smartt_socket,
+                                                 ssl_version=ssl.PROTOCOL_SSLv3)
 
         self.protocol = SmarttSimpleProtocol(self.smartt_socket.recv,
                                              self.smartt_socket.send,
@@ -354,10 +355,9 @@ class SmarttClient(object):
         "message"]
 
 
-    def updateClientBrokerage(self, brokerageId = None, newBrokerageId = None, cblcLogin = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
+    def updateClientBrokerage(self, brokerageId = None, cblcLogin = None, brokerageLogin = None, brokeragePassword = None, brokerageDigitalSignature = None):
         message = ["update_client_brokerage"]
         message += self.formatInteger("brokerage_id", brokerageId, optional=False)
-        message += self.formatInteger("new_brokerage_id", newBrokerageId, optional=True)
         message += self.formatString("cblc_login", cblcLogin, optional=True)
         message += self.formatString("brokerage_login", brokerageLogin, optional=True)
         message += self.formatString("brokerage_password", brokeragePassword, optional=True)
