@@ -38,7 +38,8 @@ class SmarttSimpleProtocol(object):
     ### separator and '$' as the end of message character
     def send(self, message):
         # Escape all tokens
-        escaped_message = [escape(token).encode(self.SERVER_ENCODING) for token in message]
+        escaped_message = [escape(token).encode(self.SERVER_ENCODING)
+                           for token in message]
 
         # Join tokens and append end of message character
         formatted_message = (self.SEPARATOR_CHAR.join(escaped_message)
@@ -60,7 +61,13 @@ class SmarttSimpleProtocol(object):
         # Reads data until the end of message character ('$') is found
         terminator_index = self.data_buffer.find(self.END_OF_MESSAGE_CHAR)
         while terminator_index == -1:
-            self.data_buffer += self.read_function(self.MAXIMUM_READ_SIZE)
+            _tmp_buffer = self.read_function(self.MAXIMUM_READ_SIZE)
+
+            if len(_tmp_buffer) == 0:
+                raise Exception('Smartt Protocol error: could not read any '+\
+                                'bytes')
+
+            self.data_buffer += _tmp_buffer
             terminator_index = self.data_buffer.find(self.END_OF_MESSAGE_CHAR)
 
         # Extracts the message from the buffer

@@ -26,7 +26,7 @@ class SmarttConsole(Cmd):
     prompt = "smartt> "
 
     def preloop(self):
-        self.smartt_client = SmarttClient(use_ssl=False)
+        self.smartt_client = SmarttClient()
     ##########################################################################
 
     def splitArgs(self, arg):

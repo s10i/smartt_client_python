@@ -2,9 +2,10 @@ import os
 import sys
 
 if sys.version_info[:2] < (2, 7) or sys.version_info[0] > 2:
-    msg = ("This software was developed for Python 2.7."
-           "We have not tested it with any other version. You are using version %s."
-           "Thus, we have not tested with your version. BE CAREFUL!" % sys.version)
+    msg = ("This software was developed for Python 2.7.\n"
+           "We have not tested it with any other version.\n" 
+           "You are using version %s.\n"
+           "Thus, we have not tested with your version. BE CAREFUL!\n" % sys.version)
     sys.stderr.write(msg)
 
 requires = ['setuptools']
