@@ -39,7 +39,6 @@ dist = setup(
     tests_require = requires,
     include_package_data = True,
     zip_safe = False,
-    namespace_packages = ['pysmartt'],
     test_suite = "tests",
     entry_points = {
         'console_scripts': [

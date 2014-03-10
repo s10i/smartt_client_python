@@ -18,7 +18,7 @@ class SmarttSimpleProtocol(object):
     SEPARATOR_CHAR = b";"
     END_OF_MESSAGE_CHAR = b"$"
     # Encoding of string data sent by the server
-    SERVER_ENCODING = "latin1"
+    SERVER_ENCODING = "utf-8"
     # Encoding used by this client
     CLIENT_ENCODING = "utf-8"
     # Maximum number of characters read on each call of the read function
@@ -76,7 +76,7 @@ class SmarttSimpleProtocol(object):
         self.data_buffer = self.data_buffer[terminator_index + 1:]
 
         # Handle data encoding
-        data = str(data.decode(self.SERVER_ENCODING))
+        data = unicode(data.decode(self.SERVER_ENCODING))
 
         if self.print_raw_messages:
             print(data + "$")
