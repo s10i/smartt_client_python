@@ -237,7 +237,7 @@ sendOrderAttributes = [
     "order_id"]
 
 
-def sendOrder(self, investmentCode = None, brokerageId = None, orderType = None, stockCode = None, marketName = None, numberOfStocks = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, description = None):
+def sendOrder(self, investmentCode = None, brokerageId = None, orderType = None, stockCode = None, marketName = None, numberOfStocks = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, reason = None):
     message = ["send_order"]
     message += self.formatString("investment_code", investmentCode, optional=False)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -249,7 +249,7 @@ def sendOrder(self, investmentCode = None, brokerageId = None, orderType = None,
     message += self.formatString("validity_type", validityType, optional=True)
     message += self.formatDate("validity", validity, optional=True)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
-    message += self.formatString("description", description, optional=True)
+    message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -259,9 +259,10 @@ cancelOrderAttributes = [
     "order_id"]
 
 
-def cancelOrder(self, orderId = None):
+def cancelOrder(self, orderId = None, reason = None):
     message = ["cancel_order"]
     message += self.formatInteger("order_id", orderId, optional=False)
+    message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -271,11 +272,12 @@ changeOrderAttributes = [
     "order_id"]
 
 
-def changeOrder(self, orderId = None, newNumberOfStocks = None, newPrice = None):
+def changeOrder(self, orderId = None, newNumberOfStocks = None, newPrice = None, reason = None):
     message = ["change_order"]
     message += self.formatInteger("order_id", orderId, optional=False)
     message += self.formatInteger("new_number_of_stocks", newNumberOfStocks, optional=True)
     message += self.formatDecimal2("new_price", newPrice, optional=True)
+    message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -303,7 +305,6 @@ getOrdersAttributes = [
     "percentual_brokerage_tax_cost",
     "iss_tax_cost",
     "entry_exit_or_reversal",
-    "description",
     "triggered_stop_order_id"]
 
 
@@ -330,7 +331,8 @@ getOrdersEventsAttributes = [
     "number_of_events",
     "datetime",
     "event_type",
-    "description"]
+    "description",
+    "reason"]
 
 
 def getOrdersEvents(self, orderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, eventType = None, returnAttributes = None):
@@ -367,7 +369,7 @@ sendStopOrderAttributes = [
     "stop_order_id"]
 
 
-def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = None, stopOrderType = None, stockCode = None, marketName = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, entryExitOrReversal = None, description = None):
+def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = None, stopOrderType = None, stockCode = None, marketName = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, entryExitOrReversal = None, reason = None):
     message = ["send_stop_order"]
     message += self.formatString("investment_code", investmentCode, optional=False)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -380,7 +382,7 @@ def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = N
     message += self.formatDecimal2("limit_price", limitPrice, optional=False)
     message += self.formatDate("validity", validity, optional=False)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
-    message += self.formatString("description", description, optional=True)
+    message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -390,9 +392,10 @@ cancelStopOrderAttributes = [
     "stop_order_id"]
 
 
-def cancelStopOrder(self, stopOrderId = None):
+def cancelStopOrder(self, stopOrderId = None, reason = None):
     message = ["cancel_stop_order"]
     message += self.formatInteger("stop_order_id", stopOrderId, optional=False)
+    message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -402,12 +405,13 @@ changeStopOrderAttributes = [
     "stop_order_id"]
 
 
-def changeStopOrder(self, stopOrderId = None, newNumberOfStocks = None, newStopPrice = None, newLimitPrice = None):
+def changeStopOrder(self, stopOrderId = None, newNumberOfStocks = None, newStopPrice = None, newLimitPrice = None, reason = None):
     message = ["change_stop_order"]
     message += self.formatInteger("stop_order_id", stopOrderId, optional=False)
     message += self.formatInteger("new_number_of_stocks", newNumberOfStocks, optional=True)
     message += self.formatDecimal2("new_stop_price", newStopPrice, optional=True)
     message += self.formatDecimal2("new_limit_price", newLimitPrice, optional=True)
+    message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -430,7 +434,6 @@ getStopOrdersAttributes = [
     "validity",
     "status",
     "entry_exit_or_reversal",
-    "description",
     "sent_order_id"]
 
 
@@ -457,7 +460,8 @@ getStopOrdersEventsAttributes = [
     "number_of_events",
     "datetime",
     "event_type",
-    "description"]
+    "description",
+    "reason"]
 
 
 def getStopOrdersEvents(self, stopOrderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, eventType = None, returnAttributes = None):
