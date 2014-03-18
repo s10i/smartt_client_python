@@ -237,7 +237,7 @@ sendOrderAttributes = [
     "order_id"]
 
 
-def sendOrder(self, investmentCode = None, brokerageId = None, orderType = None, stockCode = None, marketName = None, numberOfStocks = None, price = None, validityType = None, validity = None):
+def sendOrder(self, investmentCode = None, brokerageId = None, orderType = None, stockCode = None, marketName = None, numberOfStocks = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, description = None):
     message = ["send_order"]
     message += self.formatString("investment_code", investmentCode, optional=False)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -248,6 +248,8 @@ def sendOrder(self, investmentCode = None, brokerageId = None, orderType = None,
     message += self.formatDecimal2("price", price, optional=False)
     message += self.formatString("validity_type", validityType, optional=True)
     message += self.formatDate("validity", validity, optional=True)
+    message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
+    message += self.formatString("description", description, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -300,6 +302,8 @@ getOrdersAttributes = [
     "absolute_brokerage_tax_cost",
     "percentual_brokerage_tax_cost",
     "iss_tax_cost",
+    "entry_exit_or_reversal",
+    "description",
     "triggered_stop_order_id"]
 
 
@@ -363,7 +367,7 @@ sendStopOrderAttributes = [
     "stop_order_id"]
 
 
-def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = None, stopOrderType = None, stockCode = None, marketName = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None):
+def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = None, stopOrderType = None, stockCode = None, marketName = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, entryExitOrReversal = None, description = None):
     message = ["send_stop_order"]
     message += self.formatString("investment_code", investmentCode, optional=False)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -375,6 +379,8 @@ def sendStopOrder(self, investmentCode = None, brokerageId = None, orderType = N
     message += self.formatDecimal2("stop_price", stopPrice, optional=False)
     message += self.formatDecimal2("limit_price", limitPrice, optional=False)
     message += self.formatDate("validity", validity, optional=False)
+    message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
+    message += self.formatString("description", description, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -423,6 +429,8 @@ getStopOrdersAttributes = [
     "limit_price",
     "validity",
     "status",
+    "entry_exit_or_reversal",
+    "description",
     "sent_order_id"]
 
 
