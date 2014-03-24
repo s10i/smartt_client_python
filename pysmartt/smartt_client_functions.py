@@ -26,8 +26,12 @@ def setupSmarttFunctions(obj):
     obj.changeOrderAttributes = changeOrderAttributes
     obj.getOrders = getOrders
     obj.getOrdersAttributes = getOrdersAttributes
+    obj.getNumberOfOrders = getNumberOfOrders
+    obj.getNumberOfOrdersAttributes = getNumberOfOrdersAttributes
     obj.getOrdersEvents = getOrdersEvents
     obj.getOrdersEventsAttributes = getOrdersEventsAttributes
+    obj.getNumberOfOrdersEvents = getNumberOfOrdersEvents
+    obj.getNumberOfOrdersEventsAttributes = getNumberOfOrdersEventsAttributes
     obj.getOrderId = getOrderId
     obj.getOrderIdAttributes = getOrderIdAttributes
     obj.sendStopOrder = sendStopOrder
@@ -38,12 +42,18 @@ def setupSmarttFunctions(obj):
     obj.changeStopOrderAttributes = changeStopOrderAttributes
     obj.getStopOrders = getStopOrders
     obj.getStopOrdersAttributes = getStopOrdersAttributes
+    obj.getNumberOfStopOrders = getNumberOfStopOrders
+    obj.getNumberOfStopOrdersAttributes = getNumberOfStopOrdersAttributes
     obj.getStopOrdersEvents = getStopOrdersEvents
     obj.getStopOrdersEventsAttributes = getStopOrdersEventsAttributes
+    obj.getNumberOfStopOrdersEvents = getNumberOfStopOrdersEvents
+    obj.getNumberOfStopOrdersEventsAttributes = getNumberOfStopOrdersEventsAttributes
     obj.getStopOrderId = getStopOrderId
     obj.getStopOrderIdAttributes = getStopOrderIdAttributes
     obj.getTrades = getTrades
     obj.getTradesAttributes = getTradesAttributes
+    obj.getNumberOfTrades = getNumberOfTrades
+    obj.getNumberOfTradesAttributes = getNumberOfTradesAttributes
     obj.getInvestments = getInvestments
     obj.getInvestmentsAttributes = getInvestmentsAttributes
     obj.getReport = getReport
@@ -62,6 +72,8 @@ def setupSmarttFunctions(obj):
     obj.updateSetupAttributes = updateSetupAttributes
     obj.getFinancialTransactions = getFinancialTransactions
     obj.getFinancialTransactionsAttributes = getFinancialTransactionsAttributes
+    obj.getNumberOfFinancialTransactions = getNumberOfFinancialTransactions
+    obj.getNumberOfFinancialTransactionsAttributes = getNumberOfFinancialTransactionsAttributes
     obj.insertFinancialTransaction = insertFinancialTransaction
     obj.insertFinancialTransactionAttributes = insertFinancialTransactionAttributes
     obj.updateFinancialTransaction = updateFinancialTransaction
@@ -324,6 +336,25 @@ def getOrders(self, orderId = None, investmentCode = None, brokerageId = None, i
     return parsedResponse
 
 
+getNumberOfOrdersAttributes = [
+    "number_of_orders"]
+
+
+def getNumberOfOrders(self, orderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, stockCode = None, marketName = None, status = None):
+    message = ["get_number_of_orders"]
+    message += self.formatInteger("order_id", orderId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatString("market_name", marketName, optional=True)
+    message += self.formatString("status", status, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[0])
+    return parsedResponse
+
+
 getOrdersEventsAttributes = [
     "order_id",
     "investment_code",
@@ -346,6 +377,23 @@ def getOrdersEvents(self, orderId = None, investmentCode = None, brokerageId = N
     message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersEventsAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getOrdersEventsAttributes)
+    return parsedResponse
+
+
+getNumberOfOrdersEventsAttributes = [
+    "number_of_orders_events"]
+
+
+def getNumberOfOrdersEvents(self, orderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, eventType = None):
+    message = ["get_number_of_orders_events"]
+    message += self.formatInteger("order_id", orderId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatString("event_type", eventType, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
@@ -453,6 +501,25 @@ def getStopOrders(self, stopOrderId = None, investmentCode = None, brokerageId =
     return parsedResponse
 
 
+getNumberOfStopOrdersAttributes = [
+    "number_of_stop_orders"]
+
+
+def getNumberOfStopOrders(self, stopOrderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, stockCode = None, marketName = None, status = None):
+    message = ["get_number_of_stop_orders"]
+    message += self.formatInteger("stop_order_id", stopOrderId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatString("market_name", marketName, optional=True)
+    message += self.formatString("status", status, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[0])
+    return parsedResponse
+
+
 getStopOrdersEventsAttributes = [
     "stop_order_id",
     "investment_code",
@@ -475,6 +542,23 @@ def getStopOrdersEvents(self, stopOrderId = None, investmentCode = None, brokera
     message += self.formatAttributes("return_attributes", returnAttributes, self.getStopOrdersEventsAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getStopOrdersEventsAttributes)
+    return parsedResponse
+
+
+getNumberOfStopOrdersEventsAttributes = [
+    "number_of_stop_orders_events"]
+
+
+def getNumberOfStopOrdersEvents(self, stopOrderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, eventType = None):
+    message = ["get_number_of_stop_orders_events"]
+    message += self.formatInteger("stop_order_id", stopOrderId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatString("event_type", eventType, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
@@ -527,6 +611,24 @@ def getTrades(self, orderId = None, investmentCode = None, brokerageId = None, i
     message += self.formatAttributes("return_attributes", returnAttributes, self.getTradesAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getTradesAttributes)
+    return parsedResponse
+
+
+getNumberOfTradesAttributes = [
+    "number_of_trades"]
+
+
+def getNumberOfTrades(self, orderId = None, investmentCode = None, brokerageId = None, initialDatetime = None, finalDatetime = None, stockCode = None, marketName = None):
+    message = ["get_number_of_trades"]
+    message += self.formatInteger("order_id", orderId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatString("market_name", marketName, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
@@ -779,6 +881,20 @@ def getFinancialTransactions(self, financialTransactionId = None, investmentCode
     message += self.formatAttributes("return_attributes", returnAttributes, self.getFinancialTransactionsAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getFinancialTransactionsAttributes)
+    return parsedResponse
+
+
+getNumberOfFinancialTransactionsAttributes = [
+    "number_of_financial_transactions"]
+
+
+def getNumberOfFinancialTransactions(self, financialTransactionId = None, investmentCode = None, brokerageId = None):
+    message = ["get_number_of_financial_transactions"]
+    message += self.formatString("financial_transaction_id", financialTransactionId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
