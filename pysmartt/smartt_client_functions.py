@@ -16,8 +16,6 @@ def setupSmarttFunctions(obj):
     obj.insertClientBrokerageAttributes = insertClientBrokerageAttributes
     obj.updateClientBrokerage = updateClientBrokerage
     obj.updateClientBrokerageAttributes = updateClientBrokerageAttributes
-    obj.getStock = getStock
-    obj.getStockAttributes = getStockAttributes
     obj.sendOrder = sendOrder
     obj.sendOrderAttributes = sendOrderAttributes
     obj.cancelOrder = cancelOrder
@@ -219,30 +217,6 @@ def updateClientBrokerage(self, brokerageId = None, cblcLogin = None):
     message += self.formatString("cblc_login", cblcLogin, optional=False)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
-    return parsedResponse
-
-
-getStockAttributes = [
-    "stock_code",
-    "market_name",
-    "company_name",
-    "kind_of_stock",
-    "isin_code",
-    "trading_lot_size",
-    "kind_of_quotation",
-    "type",
-    "code_underlying_stock",
-    "exercise_price",
-    "expiration_date"]
-
-
-def getStock(self, stockCode = None, marketName = None, returnAttributes = None):
-    message = ["get_stock"]
-    message += self.formatString("stock_code", stockCode, optional=False)
-    message += self.formatString("market_name", marketName, optional=True)
-    message += self.formatAttributes("return_attributes", returnAttributes, self.getStockAttributes)
-    response = self.smarttFunction(filter(None, message))
-    parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getStockAttributes)
     return parsedResponse
 
 
