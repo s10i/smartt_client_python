@@ -5,8 +5,8 @@ import ssl
 import select
 
 # Local imports
-from .smartt_simple_protocol import SmarttSimpleProtocol
-from .smartt_client_functions import setupSmarttFunctions
+from smartt_simple_protocol import SmarttSimpleProtocol
+from smartt_client_functions import setupSmarttFunctions
 
 class SmarttClientException(BaseException):
     pass

@@ -1,13 +1,38 @@
 
-
 # Escapes a string value according to the protocol
 def escape(value):
-    return value
+    if not hasattr(escape, "encoded_characters"):
+        escape.encoded_characters = [';', '$', '\\']
+        escape.encoded_characters += [chr(i) for i in range(0,32)]
+
+    encoded = ''
+    for x in xrange(0, len(value)):
+        c = value[x]
+        if c in escape.encoded_characters:
+            encoded += '\\x'+'{:02x}'.format(ord(c))
+        else:
+            encoded += c
+
+    return encoded
 
 
 # Unescapes a string value according to the protocol
 def unescape(value):
-    return value
+    decoded = ''
+    hex_escape_count = 0
+    for x in xrange(0, len(value)):
+        c = value[x]
+        if hex_escape_count == 0:
+            if c == '\\' and (x+3 < len(value)) and value[x+1] == 'x':
+                hex_escape_count = 3
+                decoded += chr(int(value[x+2:x+4], 16))
+            else:
+                decoded += c
+        else:
+            hex_escape_count -= 1
+
+    return decoded
+
 
 
 ##############################################################################
