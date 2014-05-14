@@ -782,6 +782,7 @@ getSetupsAttributes = [
     "code",
     "description",
     "initial_capital",
+    "operational_limit",
     "slippage",
     "absolute_brokerage_tax",
     "percentual_brokerage_tax",
@@ -816,12 +817,13 @@ updateSetupAttributes = [
     "message"]
 
 
-def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, slippage = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionIncomeTax = None, positionWithholdingIncomeTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeIncomeTax = None, dayTradeWithholdingIncomeTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None, leaseTax = None, incomeTaxPayment = None):
+def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, operationalLimit = None, slippage = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionIncomeTax = None, positionWithholdingIncomeTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeIncomeTax = None, dayTradeWithholdingIncomeTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None, leaseTax = None, incomeTaxPayment = None):
     message = ["update_setup"]
     message += self.formatString("code", code, optional=False)
     message += self.formatString("new_code", newCode, optional=True)
     message += self.formatString("description", description, optional=True)
     message += self.formatString("initial_capital", initialCapital, optional=True)
+    message += self.formatString("operational_limit", operationalLimit, optional=True)
     message += self.formatDecimal2("slippage", slippage, optional=True)
     message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
     message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
