@@ -14,6 +14,22 @@ def setupSmarttFunctions(obj):
     obj.getClientBrokeragesAttributes = getClientBrokeragesAttributes
     obj.insertClientBrokerage = insertClientBrokerage
     obj.insertClientBrokerageAttributes = insertClientBrokerageAttributes
+    obj.getTradingSystems = getTradingSystems
+    obj.getTradingSystemsAttributes = getTradingSystemsAttributes
+    obj.insertTradingSystem = insertTradingSystem
+    obj.insertTradingSystemAttributes = insertTradingSystemAttributes
+    obj.updateTradingSystem = updateTradingSystem
+    obj.updateTradingSystemAttributes = updateTradingSystemAttributes
+    obj.getSetups = getSetups
+    obj.getSetupsAttributes = getSetupsAttributes
+    obj.insertSetup = insertSetup
+    obj.insertSetupAttributes = insertSetupAttributes
+    obj.updateSetup = updateSetup
+    obj.updateSetupAttributes = updateSetupAttributes
+    obj.getInvestments = getInvestments
+    obj.getInvestmentsAttributes = getInvestmentsAttributes
+    obj.insertInvestment = insertInvestment
+    obj.insertInvestmentAttributes = insertInvestmentAttributes
     obj.sendOrder = sendOrder
     obj.sendOrderAttributes = sendOrderAttributes
     obj.cancelOrder = cancelOrder
@@ -50,8 +66,6 @@ def setupSmarttFunctions(obj):
     obj.getTradesAttributes = getTradesAttributes
     obj.getNumberOfTrades = getNumberOfTrades
     obj.getNumberOfTradesAttributes = getNumberOfTradesAttributes
-    obj.getInvestments = getInvestments
-    obj.getInvestmentsAttributes = getInvestmentsAttributes
     obj.getReport = getReport
     obj.getReportAttributes = getReportAttributes
     obj.getDailyCumulativePerformance = getDailyCumulativePerformance
@@ -62,10 +76,6 @@ def setupSmarttFunctions(obj):
     obj.getPortfolioAttributes = getPortfolioAttributes
     obj.getAvailableLimits = getAvailableLimits
     obj.getAvailableLimitsAttributes = getAvailableLimitsAttributes
-    obj.getSetups = getSetups
-    obj.getSetupsAttributes = getSetupsAttributes
-    obj.updateSetup = updateSetup
-    obj.updateSetupAttributes = updateSetupAttributes
     obj.getFinancialTransactions = getFinancialTransactions
     obj.getFinancialTransactionsAttributes = getFinancialTransactionsAttributes
     obj.getNumberOfFinancialTransactions = getNumberOfFinancialTransactions
@@ -204,6 +214,169 @@ def insertClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblc
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+getTradingSystemsAttributes = [
+    "code",
+    "description"]
+
+
+def getTradingSystems(self, code = None, returnAttributes = None):
+    message = ["get_trading_systems"]
+    message += self.formatString("code", code, optional=True)
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getTradingSystemsAttributes)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getTradingSystemsAttributes)
+    return parsedResponse
+
+
+insertTradingSystemAttributes = [
+    "message"]
+
+
+def insertTradingSystem(self, code = None, description = None):
+    message = ["insert_trading_system"]
+    message += self.formatString("code", code, optional=False)
+    message += self.formatString("description", description, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+updateTradingSystemAttributes = [
+    "message"]
+
+
+def updateTradingSystem(self, code = None, newCode = None, description = None):
+    message = ["update_trading_system"]
+    message += self.formatString("code", code, optional=False)
+    message += self.formatString("new_code", newCode, optional=True)
+    message += self.formatString("description", description, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+getSetupsAttributes = [
+    "code",
+    "description",
+    "initial_capital",
+    "operational_limit",
+    "absolute_brokerage_tax",
+    "percentual_brokerage_tax",
+    "position_trading_tax",
+    "position_liquidation_tax",
+    "position_register_tax",
+    "position_other_taxes",
+    "day_trade_trading_tax",
+    "day_trade_liquidation_tax",
+    "day_trade_register_tax",
+    "day_trade_other_taxes",
+    "iss_tax",
+    "custody_tax"]
+
+
+def getSetups(self, code = None, returnAttributes = None):
+    message = ["get_setups"]
+    message += self.formatString("code", code, optional=True)
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getSetupsAttributes)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getSetupsAttributes)
+    return parsedResponse
+
+
+insertSetupAttributes = [
+    "message"]
+
+
+def insertSetup(self, code = None, description = None, initialCapital = None, operationalLimit = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
+    message = ["insert_setup"]
+    message += self.formatString("code", code, optional=False)
+    message += self.formatString("description", description, optional=True)
+    message += self.formatString("initial_capital", initialCapital, optional=False)
+    message += self.formatString("operational_limit", operationalLimit, optional=False)
+    message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
+    message += self.formatDecimal6("position_trading_tax", positionTradingTax, optional=True)
+    message += self.formatDecimal6("position_liquidation_tax", positionLiquidationTax, optional=True)
+    message += self.formatDecimal2("position_register_tax", positionRegisterTax, optional=True)
+    message += self.formatDecimal2("position_other_taxes", positionOtherTaxes, optional=True)
+    message += self.formatDecimal6("day_trade_trading_tax", dayTradeTradingTax, optional=True)
+    message += self.formatDecimal6("day_trade_liquidation_tax", dayTradeLiquidationTax, optional=True)
+    message += self.formatDecimal6("day_trade_register_tax", dayTradeRegisterTax, optional=True)
+    message += self.formatDecimal2("day_trade_other_taxes", dayTradeOtherTaxes, optional=True)
+    message += self.formatDecimal6("iss_tax", issTax, optional=True)
+    message += self.formatDecimal2("custody_tax", custodyTax, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+updateSetupAttributes = [
+    "message"]
+
+
+def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, operationalLimit = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
+    message = ["update_setup"]
+    message += self.formatString("code", code, optional=False)
+    message += self.formatString("new_code", newCode, optional=True)
+    message += self.formatString("description", description, optional=True)
+    message += self.formatString("initial_capital", initialCapital, optional=True)
+    message += self.formatString("operational_limit", operationalLimit, optional=True)
+    message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
+    message += self.formatDecimal6("position_trading_tax", positionTradingTax, optional=True)
+    message += self.formatDecimal6("position_liquidation_tax", positionLiquidationTax, optional=True)
+    message += self.formatDecimal2("position_register_tax", positionRegisterTax, optional=True)
+    message += self.formatDecimal2("position_other_taxes", positionOtherTaxes, optional=True)
+    message += self.formatDecimal6("day_trade_trading_tax", dayTradeTradingTax, optional=True)
+    message += self.formatDecimal6("day_trade_liquidation_tax", dayTradeLiquidationTax, optional=True)
+    message += self.formatDecimal6("day_trade_register_tax", dayTradeRegisterTax, optional=True)
+    message += self.formatDecimal2("day_trade_other_taxes", dayTradeOtherTaxes, optional=True)
+    message += self.formatDecimal6("iss_tax", issTax, optional=True)
+    message += self.formatDecimal2("custody_tax", custodyTax, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+getInvestmentsAttributes = [
+    "code",
+    "description",
+    "brokerage_id",
+    "trading_system_code",
+    "setup_code",
+    "is_real",
+    "initial_datetime",
+    "final_datetime"]
+
+
+def getInvestments(self, brokerageId = None, investmentCode = None, returnAttributes = None):
+    message = ["get_investments"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getInvestmentsAttributes)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getInvestmentsAttributes)
+    return parsedResponse
+
+
+insertInvestmentAttributes = [
+    "message"]
+
+
+def insertInvestment(self, brokerageId = None, tradingSystemCode = None, setupCode = None, code = None, description = None, initialDatetime = None, finalDatetime = None):
+    message = ["insert_investment"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("trading_system_code", tradingSystemCode, optional=False)
+    message += self.formatString("setup_code", setupCode, optional=False)
+    message += self.formatString("code", code, optional=False)
+    message += self.formatString("description", description, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
     return parsedResponse
@@ -616,26 +789,6 @@ def getNumberOfTrades(self, orderId = None, brokerageId = None, investmentCode =
     return parsedResponse
 
 
-getInvestmentsAttributes = [
-    "code",
-    "description",
-    "brokerage_id",
-    "setup_code",
-    "is_real",
-    "initial_datetime",
-    "final_datetime"]
-
-
-def getInvestments(self, brokerageId = None, investmentCode = None, returnAttributes = None):
-    message = ["get_investments"]
-    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
-    message += self.formatString("investment_code", investmentCode, optional=True)
-    message += self.formatAttributes("return_attributes", returnAttributes, self.getInvestmentsAttributes)
-    response = self.smarttFunction(filter(None, message))
-    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getInvestmentsAttributes)
-    return parsedResponse
-
-
 getReportAttributes = [
     "brokerage_id",
     "investment_code",
@@ -775,76 +928,6 @@ def getAvailableLimits(self, brokerageId = None, investmentCode = None, returnAt
     message += self.formatAttributes("return_attributes", returnAttributes, self.getAvailableLimitsAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getAvailableLimitsAttributes)
-    return parsedResponse
-
-
-getSetupsAttributes = [
-    "code",
-    "description",
-    "initial_capital",
-    "operational_limit",
-    "slippage",
-    "absolute_brokerage_tax",
-    "percentual_brokerage_tax",
-    "position_trading_tax",
-    "position_liquidation_tax",
-    "position_register_tax",
-    "position_income_tax",
-    "position_withholding_income_tax",
-    "position_other_taxes",
-    "day_trade_trading_tax",
-    "day_trade_liquidation_tax",
-    "day_trade_register_tax",
-    "day_trade_income_tax",
-    "day_trade_withholding_income_tax",
-    "day_trade_other_taxes",
-    "iss_tax",
-    "custody_tax",
-    "lease_tax",
-    "income_tax_payment"]
-
-
-def getSetups(self, code = None, returnAttributes = None):
-    message = ["get_setups"]
-    message += self.formatString("code", code, optional=True)
-    message += self.formatAttributes("return_attributes", returnAttributes, self.getSetupsAttributes)
-    response = self.smarttFunction(filter(None, message))
-    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getSetupsAttributes)
-    return parsedResponse
-
-
-updateSetupAttributes = [
-    "message"]
-
-
-def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, operationalLimit = None, slippage = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionIncomeTax = None, positionWithholdingIncomeTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeIncomeTax = None, dayTradeWithholdingIncomeTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None, leaseTax = None, incomeTaxPayment = None):
-    message = ["update_setup"]
-    message += self.formatString("code", code, optional=False)
-    message += self.formatString("new_code", newCode, optional=True)
-    message += self.formatString("description", description, optional=True)
-    message += self.formatString("initial_capital", initialCapital, optional=True)
-    message += self.formatString("operational_limit", operationalLimit, optional=True)
-    message += self.formatDecimal2("slippage", slippage, optional=True)
-    message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
-    message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
-    message += self.formatDecimal6("position_trading_tax", positionTradingTax, optional=True)
-    message += self.formatDecimal6("position_liquidation_tax", positionLiquidationTax, optional=True)
-    message += self.formatDecimal2("position_register_tax", positionRegisterTax, optional=True)
-    message += self.formatDecimal2("position_income_tax", positionIncomeTax, optional=True)
-    message += self.formatDecimal2("position_withholding_income_tax", positionWithholdingIncomeTax, optional=True)
-    message += self.formatDecimal2("position_other_taxes", positionOtherTaxes, optional=True)
-    message += self.formatDecimal6("day_trade_trading_tax", dayTradeTradingTax, optional=True)
-    message += self.formatDecimal6("day_trade_liquidation_tax", dayTradeLiquidationTax, optional=True)
-    message += self.formatDecimal6("day_trade_register_tax", dayTradeRegisterTax, optional=True)
-    message += self.formatDecimal6("day_trade_income_tax", dayTradeIncomeTax, optional=True)
-    message += self.formatDecimal6("day_trade_withholding_income_tax", dayTradeWithholdingIncomeTax, optional=True)
-    message += self.formatDecimal2("day_trade_other_taxes", dayTradeOtherTaxes, optional=True)
-    message += self.formatDecimal6("iss_tax", issTax, optional=True)
-    message += self.formatDecimal2("custody_tax", custodyTax, optional=True)
-    message += self.formatDecimal6("lease_tax", leaseTax, optional=True)
-    message += self.formatString("income_tax_payment", incomeTaxPayment, optional=True)
-    response = self.smarttFunction(filter(None, message))
-    parsedResponse = (response[0])
     return parsedResponse
 
 
