@@ -30,6 +30,8 @@ def setupSmarttFunctions(obj):
     obj.getInvestmentsAttributes = getInvestmentsAttributes
     obj.insertInvestment = insertInvestment
     obj.insertInvestmentAttributes = insertInvestmentAttributes
+    obj.updateInvestment = updateInvestment
+    obj.updateInvestmentAttributes = updateInvestmentAttributes
     obj.sendOrder = sendOrder
     obj.sendOrderAttributes = sendOrderAttributes
     obj.cancelOrder = cancelOrder
@@ -374,6 +376,26 @@ def insertInvestment(self, brokerageId = None, tradingSystemCode = None, setupCo
     message += self.formatString("trading_system_code", tradingSystemCode, optional=False)
     message += self.formatString("setup_code", setupCode, optional=False)
     message += self.formatString("code", code, optional=False)
+    message += self.formatString("description", description, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+updateInvestmentAttributes = [
+    "message"]
+
+
+def updateInvestment(self, brokerageId = None, code = None, newBrokerageId = None, tradingSystemCode = None, setupCode = None, newCode = None, description = None, initialDatetime = None, finalDatetime = None):
+    message = ["update_investment"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("code", code, optional=False)
+    message += self.formatInteger("new_brokerage_id", newBrokerageId, optional=True)
+    message += self.formatString("trading_system_code", tradingSystemCode, optional=True)
+    message += self.formatString("setup_code", setupCode, optional=True)
+    message += self.formatString("new_code", newCode, optional=True)
     message += self.formatString("description", description, optional=True)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
