@@ -13,6 +13,14 @@ Python 2: 2.7 ou superior
 ou
 Python 3: 3.1 ou superior
 
+## Instalação
+
+Para instalar via `pip`, basta utilizar o seguinte comando:
+
+```
+pip install git+https://github.com/s10i/smartt_client_python/
+```
+
 ## Uso
 
 Esta biblioteca facilita o uso do S10I Smartt, provendo funções simples em Python
