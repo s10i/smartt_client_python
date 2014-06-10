@@ -10,8 +10,6 @@ def setupSmarttFunctions(obj):
     obj.getClientAttributes = getClientAttributes
     obj.updateClient = updateClient
     obj.updateClientAttributes = updateClientAttributes
-    obj.getActivatedBrokerages = getActivatedBrokerages
-    obj.getActivatedBrokeragesAttributes = getActivatedBrokeragesAttributes
     obj.getClientBrokerages = getClientBrokerages
     obj.getClientBrokeragesAttributes = getClientBrokeragesAttributes
     obj.insertClientBrokerage = insertClientBrokerage
@@ -150,6 +148,7 @@ getClientAttributes = [
     "registration_datetime",
     "plan",
     "has_customized_strategies",
+    "is_active",
     "plan_expiration_date"]
 
 
@@ -188,19 +187,6 @@ def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, n
     message += self.formatString("company", company, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
-    return parsedResponse
-
-
-getActivatedBrokeragesAttributes = [
-    "id",
-    "name"]
-
-
-def getActivatedBrokerages(self, returnAttributes = None):
-    message = ["get_activated_brokerages"]
-    message += self.formatAttributes("return_attributes", returnAttributes, self.getActivatedBrokeragesAttributes)
-    response = self.smarttFunction(filter(None, message))
-    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getActivatedBrokeragesAttributes)
     return parsedResponse
 
 
