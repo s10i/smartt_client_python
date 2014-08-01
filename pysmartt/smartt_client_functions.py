@@ -404,14 +404,12 @@ updateInvestmentAttributes = [
     "message"]
 
 
-def updateInvestment(self, brokerageId = None, code = None, newBrokerageId = None, tradingSystemCode = None, setupCode = None, newCode = None, description = None, initialDatetime = None, finalDatetime = None):
+def updateInvestment(self, brokerageId = None, code = None, tradingSystemCode = None, setupCode = None, description = None, initialDatetime = None, finalDatetime = None):
     message = ["update_investment"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("code", code, optional=False)
-    message += self.formatInteger("new_brokerage_id", newBrokerageId, optional=True)
     message += self.formatString("trading_system_code", tradingSystemCode, optional=True)
     message += self.formatString("setup_code", setupCode, optional=True)
-    message += self.formatString("new_code", newCode, optional=True)
     message += self.formatString("description", description, optional=True)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
@@ -837,6 +835,7 @@ getReportAttributes = [
     "total_contributions",
     "total_withdraws",
     "initial_capital",
+    "operational_limit",
     "balance",
     "equity",
     "taxes_and_operational_costs",
