@@ -76,14 +76,14 @@ class SmarttClient(object):
 
     ### Init function - connects to the server (possibly initializing the SSL
     ### protocol as well) and setups the protocol handler
-    def __init__(self, host="smartt.s10i.com.br", port=5060, use_ssl=True,
+    def __init__(self, host="smarttbot.com", port=5060, use_ssl=True,
                  print_raw_messages=False):
         self.host = host
         self.port = port
         self.smartt_socket = socket.create_connection((self.host, self.port))
         if use_ssl:
             self.smartt_socket = ssl.wrap_socket(self.smartt_socket,
-                                                 ssl_version=ssl.PROTOCOL_SSLv3)
+                                                 ssl_version=ssl.PROTOCOL_TLSv1)
 
         self.protocol = SmarttSimpleProtocol(self.smartt_socket.recv,
                                              self.smartt_socket.send,
@@ -96,10 +96,12 @@ class SmarttClient(object):
         response = self.protocol.receive()
 
         if len(response) > 0 and response[0] == "ERROR":
-            if len(response) != 2:
-                print("STRANGE! Error response doesn't have 2 values: %s" %
+            if len(response) != 3:
+                print("STRANGE! Error response doesn't have 3 values: %s" %
                       str(response))
-            raise SmarttClientException(response[0] + ": " + response[1])
+            raise SmarttClientException( response[0] +
+                                         "(" + response[1] + "): " +
+                                         response[2] )
 
         return response
 
