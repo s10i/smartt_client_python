@@ -934,7 +934,6 @@ def getDailyDrawdown(self, brokerageId = None, investmentCode = None, initialDat
 
 getPortfolioAttributes = [
     "stock_code",
-    "market_name",
     "position_type",
     "number_of_stocks",
     "average_price",
