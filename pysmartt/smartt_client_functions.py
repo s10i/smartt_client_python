@@ -283,8 +283,16 @@ getSetupsAttributes = [
     "description",
     "initial_capital",
     "operational_limit",
-    "absolute_brokerage_tax",
-    "percentual_brokerage_tax",
+    "spot_absolute_brokerage_tax",
+    "spot_percentual_brokerage_tax",
+    "option_absolute_brokerage_tax",
+    "option_percentual_brokerage_tax",
+    "ibov_contract_day_trade_brokerage_tax",
+    "ibov_mini_day_trade_brokerage_tax",
+    "dollar_contract_day_trade_brokerage_tax",
+    "dollar_mini_day_trade_brokerage_tax",
+    "other_absolute_brokerage_tax",
+    "other_percentual_brokerage_tax",
     "position_trading_tax",
     "position_liquidation_tax",
     "position_register_tax",
@@ -310,14 +318,22 @@ insertSetupAttributes = [
     "message"]
 
 
-def insertSetup(self, code = None, description = None, initialCapital = None, operationalLimit = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
+def insertSetup(self, code = None, description = None, initialCapital = None, operationalLimit = None, spotAbsoluteBrokerageTax = None, spotPercentualBrokerageTax = None, optionAbsoluteBrokerageTax = None, optionPercentualBrokerageTax = None, ibovContractDayTradeBrokerageTax = None, ibovMiniDayTradeBrokerageTax = None, dollarContractDayTradeBrokerageTax = None, dollarMiniDayTradeBrokerageTax = None, otherAbsoluteBrokerageTax = None, otherPercentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
     message = ["insert_setup"]
     message += self.formatString("code", code, optional=False)
     message += self.formatString("description", description, optional=True)
     message += self.formatString("initial_capital", initialCapital, optional=False)
     message += self.formatString("operational_limit", operationalLimit, optional=False)
-    message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
-    message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
+    message += self.formatDecimal2("spot_absolute_brokerage_tax", spotAbsoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("spot_percentual_brokerage_tax", spotPercentualBrokerageTax, optional=True)
+    message += self.formatDecimal2("option_absolute_brokerage_tax", optionAbsoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("option_percentual_brokerage_tax", optionPercentualBrokerageTax, optional=True)
+    message += self.formatDecimal2("ibov_contract_day_trade_brokerage_tax", ibovContractDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("ibov_mini_day_trade_brokerage_tax", ibovMiniDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("dollar_contract_day_trade_brokerage_tax", dollarContractDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("dollar_mini_day_trade_brokerage_tax", dollarMiniDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("other_absolute_brokerage_tax", otherAbsoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("other_percentual_brokerage_tax", otherPercentualBrokerageTax, optional=True)
     message += self.formatDecimal6("position_trading_tax", positionTradingTax, optional=True)
     message += self.formatDecimal6("position_liquidation_tax", positionLiquidationTax, optional=True)
     message += self.formatDecimal2("position_register_tax", positionRegisterTax, optional=True)
@@ -337,15 +353,23 @@ updateSetupAttributes = [
     "message"]
 
 
-def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, operationalLimit = None, absoluteBrokerageTax = None, percentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
+def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, operationalLimit = None, spotAbsoluteBrokerageTax = None, spotPercentualBrokerageTax = None, optionAbsoluteBrokerageTax = None, optionPercentualBrokerageTax = None, ibovContractDayTradeBrokerageTax = None, ibovMiniDayTradeBrokerageTax = None, dollarContractDayTradeBrokerageTax = None, dollarMiniDayTradeBrokerageTax = None, otherAbsoluteBrokerageTax = None, otherPercentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
     message = ["update_setup"]
     message += self.formatString("code", code, optional=False)
     message += self.formatString("new_code", newCode, optional=True)
     message += self.formatString("description", description, optional=True)
     message += self.formatString("initial_capital", initialCapital, optional=True)
     message += self.formatString("operational_limit", operationalLimit, optional=True)
-    message += self.formatDecimal2("absolute_brokerage_tax", absoluteBrokerageTax, optional=True)
-    message += self.formatDecimal6("percentual_brokerage_tax", percentualBrokerageTax, optional=True)
+    message += self.formatDecimal2("spot_absolute_brokerage_tax", spotAbsoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("spot_percentual_brokerage_tax", spotPercentualBrokerageTax, optional=True)
+    message += self.formatDecimal2("option_absolute_brokerage_tax", optionAbsoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("option_percentual_brokerage_tax", optionPercentualBrokerageTax, optional=True)
+    message += self.formatDecimal2("ibov_contract_day_trade_brokerage_tax", ibovContractDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("ibov_mini_day_trade_brokerage_tax", ibovMiniDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("dollar_contract_day_trade_brokerage_tax", dollarContractDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("dollar_mini_day_trade_brokerage_tax", dollarMiniDayTradeBrokerageTax, optional=True)
+    message += self.formatDecimal2("other_absolute_brokerage_tax", otherAbsoluteBrokerageTax, optional=True)
+    message += self.formatDecimal6("other_percentual_brokerage_tax", otherPercentualBrokerageTax, optional=True)
     message += self.formatDecimal6("position_trading_tax", positionTradingTax, optional=True)
     message += self.formatDecimal6("position_liquidation_tax", positionLiquidationTax, optional=True)
     message += self.formatDecimal2("position_register_tax", positionRegisterTax, optional=True)
@@ -486,8 +510,7 @@ getOrdersAttributes = [
     "number_of_traded_stocks",
     "average_nominal_price",
     "status",
-    "absolute_brokerage_tax_cost",
-    "percentual_brokerage_tax_cost",
+    "brokerage_tax_cost",
     "iss_tax_cost",
     "entry_exit_or_reversal",
     "triggered_stop_order_id"]
