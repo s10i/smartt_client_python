@@ -6,10 +6,18 @@ def setupSmarttFunctions(obj):
     obj.logoutAttributes = logoutAttributes
     obj.logged = logged
     obj.loggedAttributes = loggedAttributes
+    obj.loginApiKey = loginApiKey
+    obj.loginApiKeyAttributes = loginApiKeyAttributes
     obj.getClient = getClient
     obj.getClientAttributes = getClientAttributes
     obj.updateClient = updateClient
     obj.updateClientAttributes = updateClientAttributes
+    obj.getApiKeys = getApiKeys
+    obj.getApiKeysAttributes = getApiKeysAttributes
+    obj.insertApiKey = insertApiKey
+    obj.insertApiKeyAttributes = insertApiKeyAttributes
+    obj.deleteApiKey = deleteApiKey
+    obj.deleteApiKeyAttributes = deleteApiKeyAttributes
     obj.getActivatedBrokerages = getActivatedBrokerages
     obj.getActivatedBrokeragesAttributes = getActivatedBrokeragesAttributes
     obj.getClientBrokerages = getClientBrokerages
@@ -127,6 +135,18 @@ def logged(self):
     return parsedResponse
 
 
+loginApiKeyAttributes = [
+    "message"]
+
+
+def loginApiKey(self, apiKey = None):
+    message = ["login_api_key"]
+    message += self.formatString("api_key", apiKey, optional=False)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
 getClientAttributes = [
     "natural_person_or_legal_person",
     "name_or_corporate_name",
@@ -187,6 +207,41 @@ def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, n
     message += self.formatString("main_phone", mainPhone, optional=True)
     message += self.formatString("secondary_phone", secondaryPhone, optional=True)
     message += self.formatString("company", company, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+getApiKeysAttributes = [
+    "api_key"]
+
+
+def getApiKeys(self, returnAttributes = None):
+    message = ["get_api_keys"]
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getApiKeysAttributes)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+insertApiKeyAttributes = [
+    "message"]
+
+
+def insertApiKey(self):
+    message = ["insert_api_key"]
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+deleteApiKeyAttributes = [
+    "message"]
+
+
+def deleteApiKey(self, apiKey = None):
+    message = ["delete_api_key"]
+    message += self.formatString("api_key", apiKey, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
     return parsedResponse
