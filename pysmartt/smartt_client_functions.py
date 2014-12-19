@@ -501,7 +501,7 @@ sendOrderAttributes = [
     "order_id"]
 
 
-def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, reason = None):
+def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, reason = None, ipClientParamsSaved = None, ipClientStrategyStart = None):
     message = ["send_order"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -514,6 +514,8 @@ def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None,
     message += self.formatDate("validity", validity, optional=True)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
+    message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
+    message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -676,7 +678,7 @@ sendStopOrderAttributes = [
     "stop_order_id"]
 
 
-def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = None, stopOrderType = None, marketName = None, stockCode = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, entryExitOrReversal = None, reason = None):
+def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = None, stopOrderType = None, marketName = None, stockCode = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, entryExitOrReversal = None, reason = None, ipClientParamsSaved = None, ipClientStrategyStart = None):
     message = ["send_stop_order"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -690,6 +692,8 @@ def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = N
     message += self.formatDate("validity", validity, optional=False)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
+    message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
+    message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
