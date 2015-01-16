@@ -249,7 +249,8 @@ def deleteApiKey(self, apiKey = None):
 
 getActivatedBrokeragesAttributes = [
     "id",
-    "name"]
+    "name",
+    "corporate_name"]
 
 
 def getActivatedBrokerages(self, returnAttributes = None):
@@ -262,7 +263,6 @@ def getActivatedBrokerages(self, returnAttributes = None):
 
 getClientBrokeragesAttributes = [
     "brokerage_id",
-    "brokerage_name",
     "cblc_bovespa_code",
     "cblc_bmf_code"]
 
