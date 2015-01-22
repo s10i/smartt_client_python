@@ -501,7 +501,7 @@ sendOrderAttributes = [
     "order_id"]
 
 
-def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, reason = None, ipClientParamsSaved = None, ipClientStrategyStart = None):
+def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, isMarketOrder = None, price = None, validityType = None, validity = None, entryExitOrReversal = None, reason = None, ipClientParamsSaved = None, ipClientStrategyStart = None):
     message = ["send_order"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -509,7 +509,8 @@ def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None,
     message += self.formatString("market_name", marketName, optional=False)
     message += self.formatString("stock_code", stockCode, optional=False)
     message += self.formatInteger("number_of_stocks", numberOfStocks, optional=False)
-    message += self.formatDecimal2("price", price, optional=False)
+    message += self.formatBoolean("is_market_order", isMarketOrder, optional=True)
+    message += self.formatDecimal2("price", price, optional=True)
     message += self.formatString("validity_type", validityType, optional=True)
     message += self.formatDate("validity", validity, optional=True)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
@@ -678,7 +679,7 @@ sendStopOrderAttributes = [
     "stop_order_id"]
 
 
-def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = None, stopOrderType = None, marketName = None, stockCode = None, numberOfStocks = None, stopPrice = None, limitPrice = None, validity = None, entryExitOrReversal = None, reason = None, ipClientParamsSaved = None, ipClientStrategyStart = None):
+def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = None, stopOrderType = None, marketName = None, stockCode = None, numberOfStocks = None, stopPrice = None, isMarketOrder = None, limitPrice = None, validity = None, entryExitOrReversal = None, reason = None, ipClientParamsSaved = None, ipClientStrategyStart = None):
     message = ["send_stop_order"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -688,7 +689,8 @@ def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = N
     message += self.formatString("stock_code", stockCode, optional=False)
     message += self.formatInteger("number_of_stocks", numberOfStocks, optional=False)
     message += self.formatDecimal2("stop_price", stopPrice, optional=False)
-    message += self.formatDecimal2("limit_price", limitPrice, optional=False)
+    message += self.formatBoolean("is_market_order", isMarketOrder, optional=True)
+    message += self.formatDecimal2("limit_price", limitPrice, optional=True)
     message += self.formatDate("validity", validity, optional=False)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
