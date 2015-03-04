@@ -186,14 +186,14 @@ updateClientAttributes = [
     "message"]
 
 
-def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, nameOrCorporateName = None, gender = None, email = None, s10iLogin = None, newS10iPassword = None, address = None, number = None, complement = None, neighborhood = None, postalCode = None, city = None, state = None, country = None, birthday = None, mainPhone = None, secondaryPhone = None, company = None):
+def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, nameOrCorporateName = None, gender = None, document = None, email = None, newS10iPassword = None, address = None, number = None, complement = None, neighborhood = None, postalCode = None, city = None, state = None, country = None, birthday = None, mainPhone = None, secondaryPhone = None, company = None):
     message = ["update_client"]
     message += self.formatString("s10i_password", s10iPassword, optional=False)
     message += self.formatBoolean("natural_person_or_legal_person", naturalPersonOrLegalPerson, optional=True)
     message += self.formatString("name_or_corporate_name", nameOrCorporateName, optional=True)
     message += self.formatString("gender", gender, optional=True)
+    message += self.formatString("document", document, optional=True)
     message += self.formatString("email", email, optional=True)
-    message += self.formatString("s10i_login", s10iLogin, optional=True)
     message += self.formatString("new_s10i_password", newS10iPassword, optional=True)
     message += self.formatString("address", address, optional=True)
     message += self.formatString("number", number, optional=True)
