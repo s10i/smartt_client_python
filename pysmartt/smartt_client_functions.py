@@ -869,8 +869,9 @@ def getStopOrderId(self, stopOrderIdInBrokerage = None, brokerageId = None, mark
 
 
 getTradesAttributes = [
-    "order_id",
+    "trade_id",
     "trade_id_in_brokerage",
+    "order_id",
     "brokerage_id",
     "investment_code",
     "is_real",
