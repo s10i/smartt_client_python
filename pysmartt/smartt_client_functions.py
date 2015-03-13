@@ -451,10 +451,10 @@ getInvestmentsAttributes = [
     "final_datetime"]
 
 
-def getInvestments(self, brokerageId = None, investmentCode = None, returnAttributes = None):
+def getInvestments(self, brokerageId = None, code = None, returnAttributes = None):
     message = ["get_investments"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
-    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatString("code", code, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getInvestmentsAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getInvestmentsAttributes)
