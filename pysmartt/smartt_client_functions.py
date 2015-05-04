@@ -98,6 +98,10 @@ def setupSmarttFunctions(obj):
     obj.updateFinancialTransactionAttributes = updateFinancialTransactionAttributes
     obj.deleteFinancialTransactions = deleteFinancialTransactions
     obj.deleteFinancialTransactionsAttributes = deleteFinancialTransactionsAttributes
+    obj.getIndicators = getIndicators
+    obj.getIndicatorsAttributes = getIndicatorsAttributes
+    obj.insertIndicator = insertIndicator
+    obj.insertIndicatorAttributes = insertIndicatorAttributes
 
 
 loginAttributes = [
@@ -1157,6 +1161,73 @@ def deleteFinancialTransactions(self, financialTransactionId = None, brokerageId
     message += self.formatString("financial_transaction_id", financialTransactionId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
     message += self.formatString("investment_code", investmentCode, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+getIndicatorsAttributes = [
+    "code",
+    "description",
+    "market_name",
+    "stock_code",
+    "market_name2",
+    "stock_code2",
+    "market_name3",
+    "stock_code3",
+    "datetime",
+    "datetime2",
+    "datetime3",
+    "value",
+    "value2",
+    "value3",
+    "value4",
+    "value5"]
+
+
+def getIndicators(self, code = None, marketName = None, stockCode = None, marketName2 = None, stockCode2 = None, marketName3 = None, stockCode3 = None, initialDatetime = None, finalDatetime = None, initialDatetime2 = None, finalDatetime2 = None, initialDatetime3 = None, finalDatetime3 = None, returnAttributes = None):
+    message = ["get_indicators"]
+    message += self.formatString("code", code, optional=True)
+    message += self.formatString("market_name", marketName, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatString("market_name2", marketName2, optional=True)
+    message += self.formatString("stock_code2", stockCode2, optional=True)
+    message += self.formatString("market_name3", marketName3, optional=True)
+    message += self.formatString("stock_code3", stockCode3, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatDatetime("initial_datetime2", initialDatetime2, optional=True)
+    message += self.formatDatetime("final_datetime2", finalDatetime2, optional=True)
+    message += self.formatDatetime("initial_datetime3", initialDatetime3, optional=True)
+    message += self.formatDatetime("final_datetime3", finalDatetime3, optional=True)
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getIndicatorsAttributes)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getIndicatorsAttributes)
+    return parsedResponse
+
+
+insertIndicatorAttributes = [
+    "message"]
+
+
+def insertIndicator(self, code = None, description = None, marketName = None, stockCode = None, marketName2 = None, stockCode2 = None, marketName3 = None, stockCode3 = None, datetime = None, datetime2 = None, datetime3 = None, value = None, value2 = None, value3 = None, value4 = None, value5 = None):
+    message = ["insert_indicator"]
+    message += self.formatString("code", code, optional=False)
+    message += self.formatString("description", description, optional=True)
+    message += self.formatString("market_name", marketName, optional=False)
+    message += self.formatString("stock_code", stockCode, optional=False)
+    message += self.formatString("market_name2", marketName2, optional=True)
+    message += self.formatString("stock_code2", stockCode2, optional=True)
+    message += self.formatString("market_name3", marketName3, optional=True)
+    message += self.formatString("stock_code3", stockCode3, optional=True)
+    message += self.formatDatetime("datetime", datetime, optional=False)
+    message += self.formatDatetime("datetime2", datetime2, optional=True)
+    message += self.formatDatetime("datetime3", datetime3, optional=True)
+    message += self.formatDecimal6("value", value, optional=False)
+    message += self.formatDecimal6("value2", value2, optional=True)
+    message += self.formatDecimal6("value3", value3, optional=True)
+    message += self.formatDecimal6("value4", value4, optional=True)
+    message += self.formatDecimal6("value5", value5, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
     return parsedResponse
