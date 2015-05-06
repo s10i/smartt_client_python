@@ -76,7 +76,7 @@ class SmarttClient(object):
 
     ### Init function - connects to the server (possibly initializing the SSL
     ### protocol as well) and setups the protocol handler
-    def __init__(self, host="smarttbot.com", port=5060, use_ssl=True,
+    def __init__(self, host="smarttbot-server.smarttbot.com", port=5060, use_ssl=True,
                  print_raw_messages=False):
         self.host = host
         self.port = port
