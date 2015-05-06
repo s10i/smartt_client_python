@@ -1185,7 +1185,7 @@ getIndicatorsAttributes = [
     "value5"]
 
 
-def getIndicators(self, code = None, marketName = None, stockCode = None, marketName2 = None, stockCode2 = None, marketName3 = None, stockCode3 = None, initialDatetime = None, finalDatetime = None, initialDatetime2 = None, finalDatetime2 = None, initialDatetime3 = None, finalDatetime3 = None, returnAttributes = None):
+def getIndicators(self, code = None, marketName = None, stockCode = None, marketName2 = None, stockCode2 = None, marketName3 = None, stockCode3 = None, maximumNumberOfIndicators = None, initialDatetime = None, finalDatetime = None, initialDatetime2 = None, finalDatetime2 = None, initialDatetime3 = None, finalDatetime3 = None, returnAttributes = None):
     message = ["get_indicators"]
     message += self.formatString("code", code, optional=True)
     message += self.formatString("market_name", marketName, optional=True)
@@ -1194,6 +1194,7 @@ def getIndicators(self, code = None, marketName = None, stockCode = None, market
     message += self.formatString("stock_code2", stockCode2, optional=True)
     message += self.formatString("market_name3", marketName3, optional=True)
     message += self.formatString("stock_code3", stockCode3, optional=True)
+    message += self.formatInteger("maximum_number_of_indicators", maximumNumberOfIndicators, optional=True)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatDatetime("initial_datetime2", initialDatetime2, optional=True)
