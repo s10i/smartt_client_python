@@ -18,6 +18,8 @@ def setupSmarttFunctions(obj):
     obj.insertApiKeyAttributes = insertApiKeyAttributes
     obj.deleteApiKey = deleteApiKey
     obj.deleteApiKeyAttributes = deleteApiKeyAttributes
+    obj.getClientNumbers = getClientNumbers
+    obj.getClientNumbersAttributes = getClientNumbersAttributes
     obj.getActivatedBrokerages = getActivatedBrokerages
     obj.getActivatedBrokeragesAttributes = getActivatedBrokeragesAttributes
     obj.getClientBrokerages = getClientBrokerages
@@ -250,6 +252,24 @@ def deleteApiKey(self, apiKey = None):
     message += self.formatString("api_key", apiKey, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
+    return parsedResponse
+
+
+getClientNumbersAttributes = [
+    "number_of_orders_executed_on_bovespa",
+    "number_of_minis_traded_on_bmf",
+    "number_of_contracts_traded_on_bmf"]
+
+
+def getClientNumbers(self, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, returnAttributes = None):
+    message = ["get_client_numbers"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("investment_code", investmentCode, optional=False)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getClientNumbersAttributes)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getClientNumbersAttributes)
     return parsedResponse
 
 
