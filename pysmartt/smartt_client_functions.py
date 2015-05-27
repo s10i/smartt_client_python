@@ -26,6 +26,8 @@ def setupSmarttFunctions(obj):
     obj.getClientBrokeragesAttributes = getClientBrokeragesAttributes
     obj.insertClientBrokerage = insertClientBrokerage
     obj.insertClientBrokerageAttributes = insertClientBrokerageAttributes
+    obj.updateClientBrokerage = updateClientBrokerage
+    obj.updateClientBrokerageAttributes = updateClientBrokerageAttributes
     obj.getTradingSystems = getTradingSystems
     obj.getTradingSystemsAttributes = getTradingSystemsAttributes
     obj.insertTradingSystem = insertTradingSystem
@@ -290,14 +292,16 @@ def getActivatedBrokerages(self, returnAttributes = None):
 getClientBrokeragesAttributes = [
     "brokerage_id",
     "cblc_bovespa_code",
-    "cblc_bmf_code"]
+    "cblc_bmf_code",
+    "status"]
 
 
-def getClientBrokerages(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None, returnAttributes = None):
+def getClientBrokerages(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None, returnAttributes = None):
     message = ["get_client_brokerages"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
+    message += self.formatString("status", status, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getClientBrokeragesAttributes)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getClientBrokeragesAttributes)
@@ -308,8 +312,23 @@ insertClientBrokerageAttributes = [
     "message"]
 
 
-def insertClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None):
+def insertClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None):
     message = ["insert_client_brokerage"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
+    message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
+    message += self.formatString("status", status, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+updateClientBrokerageAttributes = [
+    "message"]
+
+
+def updateClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None):
+    message = ["update_client_brokerage"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
