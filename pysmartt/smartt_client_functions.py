@@ -265,8 +265,8 @@ getClientNumbersAttributes = [
 
 def getClientNumbers(self, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, returnAttributes = None):
     message = ["get_client_numbers"]
-    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
-    message += self.formatString("investment_code", investmentCode, optional=False)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getClientNumbersAttributes)
