@@ -381,7 +381,6 @@ def updateTradingSystem(self, code = None, newCode = None, description = None):
 getSetupsAttributes = [
     "code",
     "description",
-    "initial_capital",
     "operational_limit",
     "spot_absolute_brokerage_tax",
     "spot_percentual_brokerage_tax",
@@ -418,11 +417,10 @@ insertSetupAttributes = [
     "message"]
 
 
-def insertSetup(self, code = None, description = None, initialCapital = None, operationalLimit = None, spotAbsoluteBrokerageTax = None, spotPercentualBrokerageTax = None, optionAbsoluteBrokerageTax = None, optionPercentualBrokerageTax = None, ibovContractDayTradeBrokerageTax = None, ibovMiniDayTradeBrokerageTax = None, dollarContractDayTradeBrokerageTax = None, dollarMiniDayTradeBrokerageTax = None, otherAbsoluteBrokerageTax = None, otherPercentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
+def insertSetup(self, code = None, description = None, operationalLimit = None, spotAbsoluteBrokerageTax = None, spotPercentualBrokerageTax = None, optionAbsoluteBrokerageTax = None, optionPercentualBrokerageTax = None, ibovContractDayTradeBrokerageTax = None, ibovMiniDayTradeBrokerageTax = None, dollarContractDayTradeBrokerageTax = None, dollarMiniDayTradeBrokerageTax = None, otherAbsoluteBrokerageTax = None, otherPercentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
     message = ["insert_setup"]
     message += self.formatString("code", code, optional=False)
     message += self.formatString("description", description, optional=True)
-    message += self.formatString("initial_capital", initialCapital, optional=False)
     message += self.formatString("operational_limit", operationalLimit, optional=False)
     message += self.formatDecimal2("spot_absolute_brokerage_tax", spotAbsoluteBrokerageTax, optional=True)
     message += self.formatDecimal6("spot_percentual_brokerage_tax", spotPercentualBrokerageTax, optional=True)
@@ -453,12 +451,11 @@ updateSetupAttributes = [
     "message"]
 
 
-def updateSetup(self, code = None, newCode = None, description = None, initialCapital = None, operationalLimit = None, spotAbsoluteBrokerageTax = None, spotPercentualBrokerageTax = None, optionAbsoluteBrokerageTax = None, optionPercentualBrokerageTax = None, ibovContractDayTradeBrokerageTax = None, ibovMiniDayTradeBrokerageTax = None, dollarContractDayTradeBrokerageTax = None, dollarMiniDayTradeBrokerageTax = None, otherAbsoluteBrokerageTax = None, otherPercentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
+def updateSetup(self, code = None, newCode = None, description = None, operationalLimit = None, spotAbsoluteBrokerageTax = None, spotPercentualBrokerageTax = None, optionAbsoluteBrokerageTax = None, optionPercentualBrokerageTax = None, ibovContractDayTradeBrokerageTax = None, ibovMiniDayTradeBrokerageTax = None, dollarContractDayTradeBrokerageTax = None, dollarMiniDayTradeBrokerageTax = None, otherAbsoluteBrokerageTax = None, otherPercentualBrokerageTax = None, positionTradingTax = None, positionLiquidationTax = None, positionRegisterTax = None, positionOtherTaxes = None, dayTradeTradingTax = None, dayTradeLiquidationTax = None, dayTradeRegisterTax = None, dayTradeOtherTaxes = None, issTax = None, custodyTax = None):
     message = ["update_setup"]
     message += self.formatString("code", code, optional=False)
     message += self.formatString("new_code", newCode, optional=True)
     message += self.formatString("description", description, optional=True)
-    message += self.formatString("initial_capital", initialCapital, optional=True)
     message += self.formatString("operational_limit", operationalLimit, optional=True)
     message += self.formatDecimal2("spot_absolute_brokerage_tax", spotAbsoluteBrokerageTax, optional=True)
     message += self.formatDecimal6("spot_percentual_brokerage_tax", spotPercentualBrokerageTax, optional=True)
@@ -492,6 +489,7 @@ getInvestmentsAttributes = [
     "trading_system_code",
     "setup_code",
     "is_real",
+    "initial_capital",
     "initial_datetime",
     "final_datetime"]
 
@@ -510,13 +508,14 @@ insertInvestmentAttributes = [
     "message"]
 
 
-def insertInvestment(self, brokerageId = None, tradingSystemCode = None, setupCode = None, code = None, description = None, initialDatetime = None, finalDatetime = None):
+def insertInvestment(self, brokerageId = None, tradingSystemCode = None, setupCode = None, code = None, description = None, initialCapital = None, initialDatetime = None, finalDatetime = None):
     message = ["insert_investment"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("trading_system_code", tradingSystemCode, optional=False)
     message += self.formatString("setup_code", setupCode, optional=False)
     message += self.formatString("code", code, optional=False)
     message += self.formatString("description", description, optional=True)
+    message += self.formatString("initial_capital", initialCapital, optional=False)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     response = self.smarttFunction(filter(None, message))
@@ -528,13 +527,14 @@ updateInvestmentAttributes = [
     "message"]
 
 
-def updateInvestment(self, brokerageId = None, code = None, tradingSystemCode = None, setupCode = None, description = None, initialDatetime = None, finalDatetime = None):
+def updateInvestment(self, brokerageId = None, code = None, tradingSystemCode = None, setupCode = None, description = None, initialCapital = None, initialDatetime = None, finalDatetime = None):
     message = ["update_investment"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("code", code, optional=False)
     message += self.formatString("trading_system_code", tradingSystemCode, optional=True)
     message += self.formatString("setup_code", setupCode, optional=True)
     message += self.formatString("description", description, optional=True)
+    message += self.formatString("initial_capital", initialCapital, optional=True)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     response = self.smarttFunction(filter(None, message))
