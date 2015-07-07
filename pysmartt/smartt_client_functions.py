@@ -1104,10 +1104,12 @@ resetPortfolioAttributes = [
     "message"]
 
 
-def resetPortfolio(self, brokerageId = None, investmentCode = None, ipClientParamsSaved = None, ipClientStrategyStart = None, strategyId = None):
+def resetPortfolio(self, brokerageId = None, investmentCode = None, marketName = None, stockCode = None, ipClientParamsSaved = None, ipClientStrategyStart = None, strategyId = None):
     message = ["reset_portfolio"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
+    message += self.formatString("market_name", marketName, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
