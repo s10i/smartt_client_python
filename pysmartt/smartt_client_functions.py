@@ -293,7 +293,9 @@ getClientBrokeragesAttributes = [
     "brokerage_id",
     "cblc_bovespa_code",
     "cblc_bmf_code",
-    "status"]
+    "insertion_datetime",
+    "status",
+    "approval_datetime"]
 
 
 def getClientBrokerages(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None, returnAttributes = None):
