@@ -1107,7 +1107,7 @@ def getPortfolio(self, brokerageId = None, investmentCode = None, initialDatetim
 
 
 cancelAllPendingOrdersAttributes = [
-    "message"]
+    "order_ids"]
 
 
 def cancelAllPendingOrders(self, brokerageId = None, investmentCode = None, marketName = None, stockCode = None, ipClientParamsSaved = None, ipClientStrategyStart = None, strategyId = None):
@@ -1120,12 +1120,12 @@ def cancelAllPendingOrders(self, brokerageId = None, investmentCode = None, mark
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
     response = self.smarttFunction(filter(None, message))
-    parsedResponse = (response[0])
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
 cancelAllPendingStopOrdersAttributes = [
-    "message"]
+    "stop_order_ids"]
 
 
 def cancelAllPendingStopOrders(self, brokerageId = None, investmentCode = None, marketName = None, stockCode = None, ipClientParamsSaved = None, ipClientStrategyStart = None, strategyId = None):
@@ -1138,12 +1138,12 @@ def cancelAllPendingStopOrders(self, brokerageId = None, investmentCode = None, 
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
     response = self.smarttFunction(filter(None, message))
-    parsedResponse = (response[0])
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
 resetPortfolioAttributes = [
-    "message"]
+    "order_ids"]
 
 
 def resetPortfolio(self, brokerageId = None, investmentCode = None, marketName = None, stockCode = None, ipClientParamsSaved = None, ipClientStrategyStart = None, strategyId = None):
@@ -1156,7 +1156,7 @@ def resetPortfolio(self, brokerageId = None, investmentCode = None, marketName =
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
     response = self.smarttFunction(filter(None, message))
-    parsedResponse = (response[0])
+    parsedResponse = int(response[0])
     return parsedResponse
 
 
