@@ -1092,7 +1092,8 @@ getPortfolioAttributes = [
     "number_of_stocks",
     "average_price",
     "financial_volume",
-    "is_market_open"]
+    "is_market_open",
+    "has_pending_reset_orders"]
 
 
 def getPortfolio(self, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, returnAttributes = None):
