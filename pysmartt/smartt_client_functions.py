@@ -295,6 +295,7 @@ def getActivatedBrokerages(self, returnAttributes = None):
 
 getClientBrokeragesAttributes = [
     "brokerage_id",
+    "brokerage_office_id",
     "cblc_bovespa_code",
     "cblc_bmf_code",
     "insertion_datetime",
@@ -318,9 +319,10 @@ insertClientBrokerageAttributes = [
     "message"]
 
 
-def insertClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None):
+def insertClientBrokerage(self, brokerageId = None, brokerageOfficeId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None):
     message = ["insert_client_brokerage"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatInteger("brokerage_office_id", brokerageOfficeId, optional=True)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
     message += self.formatString("status", status, optional=True)
