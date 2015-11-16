@@ -62,6 +62,8 @@ def setupSmarttFunctions(obj):
     obj.getNumberOfOrdersEventsAttributes = getNumberOfOrdersEventsAttributes
     obj.getOrderId = getOrderId
     obj.getOrderIdAttributes = getOrderIdAttributes
+    obj.insertExternalOrder = insertExternalOrder
+    obj.insertExternalOrderAttributes = insertExternalOrderAttributes
     obj.sendStopOrder = sendStopOrder
     obj.sendStopOrderAttributes = sendStopOrderAttributes
     obj.cancelStopOrder = cancelStopOrder
@@ -735,6 +737,26 @@ def getOrderId(self, orderIdInBrokerage = None, brokerageId = None, marketName =
     message += self.formatDate("date", date, optional=False)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[0])
+    return parsedResponse
+
+
+insertExternalOrderAttributes = [
+    "order_id"]
+
+
+def insertExternalOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None):
+    message = ["insert_external_order"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("investment_code", investmentCode, optional=False)
+    message += self.formatBoolean("order_type", orderType, optional=False)
+    message += self.formatString("market_name", marketName, optional=False)
+    message += self.formatString("stock_code", stockCode, optional=False)
+    message += self.formatInteger("number_of_stocks", numberOfStocks, optional=False)
+    message += self.formatDecimal2("price", price, optional=False)
+    message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
+    message += self.formatString("reason", reason, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[1])
     return parsedResponse
 
 
