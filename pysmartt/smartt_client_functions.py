@@ -64,6 +64,10 @@ def setupSmarttFunctions(obj):
     obj.getOrderIdAttributes = getOrderIdAttributes
     obj.insertExternalOrder = insertExternalOrder
     obj.insertExternalOrderAttributes = insertExternalOrderAttributes
+    obj.updateExternalOrder = updateExternalOrder
+    obj.updateExternalOrderAttributes = updateExternalOrderAttributes
+    obj.deleteExternalOrders = deleteExternalOrders
+    obj.deleteExternalOrdersAttributes = deleteExternalOrdersAttributes
     obj.sendStopOrder = sendStopOrder
     obj.sendStopOrderAttributes = sendStopOrderAttributes
     obj.cancelStopOrder = cancelStopOrder
@@ -639,7 +643,7 @@ getOrdersAttributes = [
     "gross_profit"]
 
 
-def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, offset = None, limit = None, returnAttributes = None):
+def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, isExternalOrder = None, offset = None, limit = None, returnAttributes = None):
     message = ["get_orders"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -649,6 +653,7 @@ def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, i
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatBoolean("is_external_order", isExternalOrder, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersAttributes)
@@ -757,6 +762,48 @@ def insertExternalOrder(self, brokerageId = None, investmentCode = None, orderTy
     message += self.formatString("reason", reason, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
+    return parsedResponse
+
+
+updateExternalOrderAttributes = [
+    "order_id"]
+
+
+def updateExternalOrder(self, orderId = None, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None):
+    message = ["update_external_order"]
+    message += self.formatInteger("order_id", orderId, optional=False)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatBoolean("order_type", orderType, optional=True)
+    message += self.formatString("market_name", marketName, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatInteger("number_of_stocks", numberOfStocks, optional=True)
+    message += self.formatDecimal2("price", price, optional=True)
+    message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
+    message += self.formatString("reason", reason, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = int(response[1])
+    return parsedResponse
+
+
+deleteExternalOrdersAttributes = [
+    "message"]
+
+
+def deleteExternalOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, offset = None, limit = None):
+    message = ["delete_external_orders"]
+    message += self.formatInteger("order_id", orderId, optional=True)
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatString("investment_code", investmentCode, optional=True)
+    message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
+    message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
+    message += self.formatString("market_name", marketName, optional=True)
+    message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatString("status", status, optional=True)
+    message += self.formatInteger("offset", offset, optional=True)
+    message += self.formatInteger("limit", limit, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
     return parsedResponse
 
 
