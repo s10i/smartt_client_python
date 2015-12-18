@@ -751,7 +751,7 @@ insertExternalOrderAttributes = [
     "order_id"]
 
 
-def insertExternalOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None):
+def insertExternalOrder(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None, datetime = None):
     message = ["insert_external_order"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -762,6 +762,7 @@ def insertExternalOrder(self, brokerageId = None, investmentCode = None, orderTy
     message += self.formatDecimal2("price", price, optional=False)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
+    message += self.formatDatetime("datetime", datetime, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
@@ -771,7 +772,7 @@ updateExternalOrderAttributes = [
     "order_id"]
 
 
-def updateExternalOrder(self, orderId = None, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None):
+def updateExternalOrder(self, orderId = None, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None, datetime = None):
     message = ["update_external_order"]
     message += self.formatInteger("order_id", orderId, optional=False)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -783,6 +784,7 @@ def updateExternalOrder(self, orderId = None, brokerageId = None, investmentCode
     message += self.formatDecimal2("price", price, optional=True)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
+    message += self.formatDatetime("datetime", datetime, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = int(response[1])
     return parsedResponse
