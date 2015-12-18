@@ -636,14 +636,16 @@ getOrdersAttributes = [
     "status",
     "brokerage_tax_cost",
     "iss_tax_cost",
-    "entry_exit_or_reversal",
+    "sent_by_reset_portfolio",
+    "sent_by_insert_external_order",
     "triggered_stop_order_id",
+    "entry_exit_or_reversal",
     "absolute_average_simple_profit",
     "percentual_average_simple_profit",
     "gross_profit"]
 
 
-def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, isExternalOrder = None, offset = None, limit = None, returnAttributes = None):
+def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, includeExternalOrders = None, offset = None, limit = None, returnAttributes = None):
     message = ["get_orders"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -653,7 +655,7 @@ def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, i
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
-    message += self.formatBoolean("is_external_order", isExternalOrder, optional=True)
+    message += self.formatBoolean("include_external_orders", includeExternalOrders, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersAttributes)
