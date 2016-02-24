@@ -132,7 +132,9 @@ def login(self, s10iLogin = None, s10iPassword = None):
     message = ["login"]
     message += self.formatString("s10i_login", s10iLogin, optional=False)
     message += self.formatString("s10i_password", s10iPassword, optional=False)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -143,7 +145,13 @@ logoutAttributes = [
 
 def logout(self):
     message = ["logout"]
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+        "ss_market_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -154,7 +162,13 @@ loggedAttributes = [
 
 def logged(self):
     message = ["logged"]
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+        "ss_market_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -166,7 +180,13 @@ loginApiKeyAttributes = [
 def loginApiKey(self, apiKey = None):
     message = ["login_api_key"]
     message += self.formatString("api_key", apiKey, optional=False)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+        "ss_market_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -178,7 +198,9 @@ checkPasswordAttributes = [
 def checkPassword(self, s10iPassword = None):
     message = ["check_password"]
     message += self.formatString("s10i_password", s10iPassword, optional=False)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -213,7 +235,9 @@ getClientAttributes = [
 def getClient(self, returnAttributes = None):
     message = ["get_client"]
     message += self.formatAttributes("return_attributes", returnAttributes, self.getClientAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getClientAttributes)
     return parsedResponse
 
@@ -243,7 +267,9 @@ def updateClient(self, s10iPassword = None, naturalPersonOrLegalPerson = None, n
     message += self.formatString("main_phone", mainPhone, optional=True)
     message += self.formatString("secondary_phone", secondaryPhone, optional=True)
     message += self.formatString("company", company, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -255,7 +281,9 @@ getApiKeysAttributes = [
 def getApiKeys(self, returnAttributes = None):
     message = ["get_api_keys"]
     message += self.formatAttributes("return_attributes", returnAttributes, self.getApiKeysAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -266,7 +294,9 @@ insertApiKeyAttributes = [
 
 def insertApiKey(self):
     message = ["insert_api_key"]
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -278,7 +308,9 @@ deleteApiKeyAttributes = [
 def deleteApiKey(self, apiKey = None):
     message = ["delete_api_key"]
     message += self.formatString("api_key", apiKey, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -296,7 +328,9 @@ def getClientNumbers(self, brokerageId = None, investmentCode = None, initialDat
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getClientNumbersAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getClientNumbersAttributes)
     return parsedResponse
 
@@ -310,7 +344,9 @@ getActivatedBrokeragesAttributes = [
 def getActivatedBrokerages(self, returnAttributes = None):
     message = ["get_activated_brokerages"]
     message += self.formatAttributes("return_attributes", returnAttributes, self.getActivatedBrokeragesAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getActivatedBrokeragesAttributes)
     return parsedResponse
 
@@ -332,7 +368,9 @@ def getClientBrokerages(self, brokerageId = None, cblcBovespaCode = None, cblcBm
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
     message += self.formatString("status", status, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getClientBrokeragesAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getClientBrokeragesAttributes)
     return parsedResponse
 
@@ -348,7 +386,9 @@ def insertClientBrokerage(self, brokerageId = None, brokerageOfficeId = None, cb
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
     message += self.formatString("status", status, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -362,7 +402,9 @@ def updateClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblc
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -377,7 +419,9 @@ def deleteClientBrokerages(self, brokerageId = None, cblcBovespaCode = None, cbl
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
     message += self.formatString("status", status, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -391,7 +435,9 @@ def getTradingSystems(self, code = None, returnAttributes = None):
     message = ["get_trading_systems"]
     message += self.formatString("code", code, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getTradingSystemsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getTradingSystemsAttributes)
     return parsedResponse
 
@@ -404,7 +450,9 @@ def insertTradingSystem(self, code = None, description = None):
     message = ["insert_trading_system"]
     message += self.formatString("code", code, optional=False)
     message += self.formatString("description", description, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -418,7 +466,9 @@ def updateTradingSystem(self, code = None, newCode = None, description = None):
     message += self.formatString("code", code, optional=False)
     message += self.formatString("new_code", newCode, optional=True)
     message += self.formatString("description", description, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -453,7 +503,9 @@ def getSetups(self, code = None, returnAttributes = None):
     message = ["get_setups"]
     message += self.formatString("code", code, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getSetupsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getSetupsAttributes)
     return parsedResponse
 
@@ -487,7 +539,9 @@ def insertSetup(self, code = None, description = None, operationalLimit = None, 
     message += self.formatDecimal2("day_trade_other_taxes", dayTradeOtherTaxes, optional=True)
     message += self.formatDecimal6("iss_tax", issTax, optional=True)
     message += self.formatDecimal2("custody_tax", custodyTax, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -522,7 +576,9 @@ def updateSetup(self, code = None, newCode = None, description = None, operation
     message += self.formatDecimal2("day_trade_other_taxes", dayTradeOtherTaxes, optional=True)
     message += self.formatDecimal6("iss_tax", issTax, optional=True)
     message += self.formatDecimal2("custody_tax", custodyTax, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -544,7 +600,9 @@ def getInvestments(self, brokerageId = None, code = None, returnAttributes = Non
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
     message += self.formatString("code", code, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getInvestmentsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getInvestmentsAttributes)
     return parsedResponse
 
@@ -563,7 +621,9 @@ def insertInvestment(self, brokerageId = None, tradingSystemCode = None, setupCo
     message += self.formatString("initial_capital", initialCapital, optional=False)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -582,7 +642,9 @@ def updateInvestment(self, brokerageId = None, code = None, tradingSystemCode = 
     message += self.formatString("initial_capital", initialCapital, optional=True)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -608,7 +670,11 @@ def sendOrder(self, brokerageId = None, investmentCode = None, orderType = None,
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -624,7 +690,11 @@ def cancelOrder(self, orderId = None, reason = None, ipClientParamsSaved = None,
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -642,7 +712,11 @@ def changeOrder(self, orderId = None, newNumberOfStocks = None, newPrice = None,
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -690,7 +764,9 @@ def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, i
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getOrdersAttributes)
     return parsedResponse
 
@@ -711,7 +787,9 @@ def getNumberOfOrders(self, orderId = None, brokerageId = None, investmentCode =
     message += self.formatString("status", status, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -738,7 +816,9 @@ def getOrdersEvents(self, orderId = None, brokerageId = None, investmentCode = N
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getOrdersEventsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getOrdersEventsAttributes)
     return parsedResponse
 
@@ -757,7 +837,9 @@ def getNumberOfOrdersEvents(self, orderId = None, brokerageId = None, investment
     message += self.formatString("event_type", eventType, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -773,7 +855,9 @@ def getOrderId(self, orderIdInBrokerage = None, brokerageId = None, marketName =
     message += self.formatString("market_name", marketName, optional=False)
     message += self.formatString("stock_code", stockCode, optional=False)
     message += self.formatDate("date", date, optional=False)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -794,7 +878,9 @@ def insertExternalOrder(self, brokerageId = None, investmentCode = None, orderTy
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
     message += self.formatDatetime("datetime", datetime, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -816,7 +902,9 @@ def updateExternalOrder(self, orderId = None, brokerageId = None, investmentCode
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
     message += self.formatDatetime("datetime", datetime, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -837,7 +925,9 @@ def deleteExternalOrders(self, orderId = None, brokerageId = None, investmentCod
     message += self.formatString("status", status, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -864,7 +954,11 @@ def sendStopOrder(self, brokerageId = None, investmentCode = None, orderType = N
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -880,7 +974,11 @@ def cancelStopOrder(self, stopOrderId = None, reason = None, ipClientParamsSaved
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -899,7 +997,11 @@ def changeStopOrder(self, stopOrderId = None, newNumberOfStocks = None, newStopP
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[1])
     return parsedResponse
 
@@ -937,7 +1039,9 @@ def getStopOrders(self, stopOrderId = None, brokerageId = None, investmentCode =
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getStopOrdersAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getStopOrdersAttributes)
     return parsedResponse
 
@@ -958,7 +1062,9 @@ def getNumberOfStopOrders(self, stopOrderId = None, brokerageId = None, investme
     message += self.formatString("status", status, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -985,7 +1091,9 @@ def getStopOrdersEvents(self, stopOrderId = None, brokerageId = None, investment
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getStopOrdersEventsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getStopOrdersEventsAttributes)
     return parsedResponse
 
@@ -1004,7 +1112,9 @@ def getNumberOfStopOrdersEvents(self, stopOrderId = None, brokerageId = None, in
     message += self.formatString("event_type", eventType, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1020,7 +1130,9 @@ def getStopOrderId(self, stopOrderIdInBrokerage = None, brokerageId = None, mark
     message += self.formatString("market_name", marketName, optional=False)
     message += self.formatString("stock_code", stockCode, optional=False)
     message += self.formatDate("date", date, optional=False)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1059,7 +1171,9 @@ def getTrades(self, orderId = None, brokerageId = None, investmentCode = None, i
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getTradesAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getTradesAttributes)
     return parsedResponse
 
@@ -1079,7 +1193,9 @@ def getNumberOfTrades(self, orderId = None, brokerageId = None, investmentCode =
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1153,7 +1269,9 @@ def getReport(self, brokerageId = None, investmentCode = None, initialDatetime =
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getReportAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatDictResponse(response[0:], returnAttributes, self.getReportAttributes)
     return parsedResponse
 
@@ -1170,7 +1288,9 @@ def getDailyCumulativePerformance(self, brokerageId = None, investmentCode = Non
     message += self.formatString("investment_code", investmentCode, optional=False)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatDictResponse(response[0:], [], self.getDailyCumulativePerformanceAttributes)
     return parsedResponse
 
@@ -1187,7 +1307,9 @@ def getDailyDrawdown(self, brokerageId = None, investmentCode = None, initialDat
     message += self.formatString("investment_code", investmentCode, optional=False)
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatDictResponse(response[0:], [], self.getDailyDrawdownAttributes)
     return parsedResponse
 
@@ -1212,7 +1334,9 @@ def getPortfolio(self, brokerageId = None, investmentCode = None, initialDatetim
     message += self.formatDatetime("initial_datetime", initialDatetime, optional=True)
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getPortfolioAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[2:], returnAttributes, self.getPortfolioAttributes)
     return parsedResponse
 
@@ -1230,7 +1354,12 @@ def cancelAllPendingOrders(self, brokerageId = None, investmentCode = None, mark
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1248,7 +1377,12 @@ def cancelAllPendingStopOrders(self, brokerageId = None, investmentCode = None, 
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1266,7 +1400,12 @@ def resetPortfolio(self, brokerageId = None, investmentCode = None, marketName =
     message += self.formatString("ip_client_params_saved", ipClientParamsSaved, optional=True)
     message += self.formatString("ip_client_strategy_start", ipClientStrategyStart, optional=True)
     message += self.formatString("strategy_id", strategyId, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1282,7 +1421,11 @@ def getAvailableLimits(self, brokerageId = None, investmentCode = None, returnAt
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
     message += self.formatString("investment_code", investmentCode, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getAvailableLimitsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_auto_trading",
+        "ss_paper_trading",
+        "ss_delay_paper_trading",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getAvailableLimitsAttributes)
     return parsedResponse
 
@@ -1306,7 +1449,9 @@ def getFinancialTransactions(self, financialTransactionId = None, brokerageId = 
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getFinancialTransactionsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getFinancialTransactionsAttributes)
     return parsedResponse
 
@@ -1322,7 +1467,9 @@ def getNumberOfFinancialTransactions(self, financialTransactionId = None, broker
     message += self.formatString("investment_code", investmentCode, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = int(response[0])
     return parsedResponse
 
@@ -1340,7 +1487,9 @@ def insertFinancialTransaction(self, brokerageId = None, investmentCode = None, 
     message += self.formatDecimal2("value", value, optional=False)
     message += self.formatDecimal2("operational_tax_cost", operationalTaxCost, optional=False)
     message += self.formatString("description", description, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -1359,7 +1508,9 @@ def updateFinancialTransaction(self, financialTransactionId = None, brokerageId 
     message += self.formatDecimal2("value", value, optional=True)
     message += self.formatDecimal2("operational_tax_cost", operationalTaxCost, optional=True)
     message += self.formatString("description", description, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -1373,7 +1524,9 @@ def deleteFinancialTransactions(self, financialTransactionId = None, brokerageId
     message += self.formatString("financial_transaction_id", financialTransactionId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
     message += self.formatString("investment_code", investmentCode, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
@@ -1414,7 +1567,9 @@ def getIndicators(self, code = None, marketName = None, stockCode = None, market
     message += self.formatDatetime("initial_datetime3", initialDatetime3, optional=True)
     message += self.formatDatetime("final_datetime3", finalDatetime3, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getIndicatorsAttributes)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getIndicatorsAttributes)
     return parsedResponse
 
@@ -1441,7 +1596,9 @@ def insertIndicator(self, code = None, description = None, marketName = None, st
     message += self.formatDecimal6("value3", value3, optional=True)
     message += self.formatDecimal6("value4", value4, optional=True)
     message += self.formatDecimal6("value5", value5, optional=True)
-    response = self.smarttFunction(filter(None, message))
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
     parsedResponse = (response[0])
     return parsedResponse
 
