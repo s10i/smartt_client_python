@@ -8,6 +8,8 @@ def setupSmarttFunctions(obj):
     obj.loggedAttributes = loggedAttributes
     obj.loginApiKey = loginApiKey
     obj.loginApiKeyAttributes = loginApiKeyAttributes
+    obj.checkPassword = checkPassword
+    obj.checkPasswordAttributes = checkPasswordAttributes
     obj.getClient = getClient
     obj.getClientAttributes = getClientAttributes
     obj.updateClient = updateClient
@@ -28,6 +30,8 @@ def setupSmarttFunctions(obj):
     obj.insertClientBrokerageAttributes = insertClientBrokerageAttributes
     obj.updateClientBrokerage = updateClientBrokerage
     obj.updateClientBrokerageAttributes = updateClientBrokerageAttributes
+    obj.deleteClientBrokerages = deleteClientBrokerages
+    obj.deleteClientBrokeragesAttributes = deleteClientBrokeragesAttributes
     obj.getTradingSystems = getTradingSystems
     obj.getTradingSystemsAttributes = getTradingSystemsAttributes
     obj.insertTradingSystem = insertTradingSystem
@@ -162,6 +166,18 @@ loginApiKeyAttributes = [
 def loginApiKey(self, apiKey = None):
     message = ["login_api_key"]
     message += self.formatString("api_key", apiKey, optional=False)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+checkPasswordAttributes = [
+    "message"]
+
+
+def checkPassword(self, s10iPassword = None):
+    message = ["check_password"]
+    message += self.formatString("s10i_password", s10iPassword, optional=False)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
     return parsedResponse
@@ -346,6 +362,21 @@ def updateClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblc
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
+    response = self.smarttFunction(filter(None, message))
+    parsedResponse = (response[0])
+    return parsedResponse
+
+
+deleteClientBrokeragesAttributes = [
+    "message"]
+
+
+def deleteClientBrokerages(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None):
+    message = ["delete_client_brokerages"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
+    message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
+    message += self.formatString("status", status, optional=True)
     response = self.smarttFunction(filter(None, message))
     parsedResponse = (response[0])
     return parsedResponse
@@ -1067,6 +1098,7 @@ getReportAttributes = [
     "balance",
     "equity",
     "taxes_and_operational_costs",
+    "today_gross_result",
     "gross_return",
     "gross_daily_return",
     "gross_annualized_return",
