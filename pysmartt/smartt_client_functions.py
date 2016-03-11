@@ -72,6 +72,8 @@ def setupSmarttFunctions(obj):
     obj.updateExternalOrderAttributes = updateExternalOrderAttributes
     obj.deleteExternalOrders = deleteExternalOrders
     obj.deleteExternalOrdersAttributes = deleteExternalOrdersAttributes
+    obj.insertBacktestingOrders = insertBacktestingOrders
+    obj.insertBacktestingOrdersAttributes = insertBacktestingOrdersAttributes
     obj.sendStopOrder = sendStopOrder
     obj.sendStopOrderAttributes = sendStopOrderAttributes
     obj.cancelStopOrder = cancelStopOrder
@@ -739,6 +741,7 @@ getOrdersAttributes = [
     "number_of_traded_stocks",
     "average_nominal_price",
     "status",
+    "is_pending",
     "brokerage_tax_cost",
     "iss_tax_cost",
     "sent_by_reset_portfolio",
@@ -932,6 +935,29 @@ def deleteExternalOrders(self, orderId = None, brokerageId = None, investmentCod
     return parsedResponse
 
 
+insertBacktestingOrdersAttributes = [
+    "order_id"]
+
+
+def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None, datetime = None):
+    message = ["insert_backtesting_orders"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("investment_code", investmentCode, optional=False)
+    message += self.formatBoolean("order_type", orderType, optional=False)
+    message += self.formatString("market_name", marketName, optional=False)
+    message += self.formatString("stock_code", stockCode, optional=False)
+    message += self.formatInteger("number_of_stocks", numberOfStocks, optional=False)
+    message += self.formatDecimal2("price", price, optional=False)
+    message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
+    message += self.formatString("reason", reason, optional=True)
+    message += self.formatDatetime("datetime", datetime, optional=True)
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
+    parsedResponse = int(response[1])
+    return parsedResponse
+
+
 sendStopOrderAttributes = [
     "stop_order_id"]
 
@@ -1022,6 +1048,7 @@ getStopOrdersAttributes = [
     "limit_price",
     "validity",
     "status",
+    "is_pending",
     "entry_exit_or_reversal",
     "sent_order_id"]
 
