@@ -939,7 +939,7 @@ insertBacktestingOrdersAttributes = [
     "order_id"]
 
 
-def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None, datetime = None):
+def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None, datetime = None, status = None, numberOfTradedStocks = None, averageNominalPrice = None):
     message = ["insert_backtesting_orders"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -951,6 +951,9 @@ def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, ord
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
     message += self.formatDatetime("datetime", datetime, optional=True)
+    message += self.formatString("status", status, optional=True)
+    message += self.formatInteger("number_of_traded_stocks", numberOfTradedStocks, optional=True)
+    message += self.formatDecimal2("average_nominal_price", averageNominalPrice, optional=True)
     response = self.smarttFunction( filter(None, message), [
         "ss_s10i_data",
     ] )
