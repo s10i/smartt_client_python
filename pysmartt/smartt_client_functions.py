@@ -231,7 +231,11 @@ getClientAttributes = [
     "plan",
     "has_customized_strategies",
     "is_active",
-    "plan_expiration_date"]
+    "plan_expiration_date",
+    "number_of_robots_limit",
+    "bovespa_financial_volume_limit",
+    "bmef_contracts_limit",
+    "bmef_mini_contracts_limit"]
 
 
 def getClient(self, returnAttributes = None):
@@ -753,7 +757,7 @@ getOrdersAttributes = [
     "gross_profit"]
 
 
-def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, includeExternalOrders = None, offset = None, limit = None, returnAttributes = None):
+def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, onlyPending = None, includeExternalOrders = None, offset = None, limit = None, returnAttributes = None):
     message = ["get_orders"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -763,6 +767,7 @@ def getOrders(self, orderId = None, brokerageId = None, investmentCode = None, i
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatBoolean("only_pending", onlyPending, optional=True)
     message += self.formatBoolean("include_external_orders", includeExternalOrders, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
@@ -778,7 +783,7 @@ getNumberOfOrdersAttributes = [
     "number_of_orders"]
 
 
-def getNumberOfOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, offset = None, limit = None):
+def getNumberOfOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, onlyPending = None, includeExternalOrders = None, offset = None, limit = None):
     message = ["get_number_of_orders"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -788,6 +793,8 @@ def getNumberOfOrders(self, orderId = None, brokerageId = None, investmentCode =
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatBoolean("only_pending", onlyPending, optional=True)
+    message += self.formatBoolean("include_external_orders", includeExternalOrders, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     response = self.smarttFunction( filter(None, message), [
@@ -916,7 +923,7 @@ deleteExternalOrdersAttributes = [
     "message"]
 
 
-def deleteExternalOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, offset = None, limit = None):
+def deleteExternalOrders(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, onlyPending = None, includeExternalOrders = None, offset = None, limit = None):
     message = ["delete_external_orders"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -926,6 +933,8 @@ def deleteExternalOrders(self, orderId = None, brokerageId = None, investmentCod
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatBoolean("only_pending", onlyPending, optional=True)
+    message += self.formatBoolean("include_external_orders", includeExternalOrders, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     response = self.smarttFunction( filter(None, message), [
@@ -1056,7 +1065,7 @@ getStopOrdersAttributes = [
     "sent_order_id"]
 
 
-def getStopOrders(self, stopOrderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, offset = None, limit = None, returnAttributes = None):
+def getStopOrders(self, stopOrderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, onlyPending = None, offset = None, limit = None, returnAttributes = None):
     message = ["get_stop_orders"]
     message += self.formatInteger("stop_order_id", stopOrderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -1066,6 +1075,7 @@ def getStopOrders(self, stopOrderId = None, brokerageId = None, investmentCode =
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatBoolean("only_pending", onlyPending, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getStopOrdersAttributes)
@@ -1080,7 +1090,7 @@ getNumberOfStopOrdersAttributes = [
     "number_of_stop_orders"]
 
 
-def getNumberOfStopOrders(self, stopOrderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, offset = None, limit = None):
+def getNumberOfStopOrders(self, stopOrderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, status = None, onlyPending = None, offset = None, limit = None):
     message = ["get_number_of_stop_orders"]
     message += self.formatInteger("stop_order_id", stopOrderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -1090,6 +1100,7 @@ def getNumberOfStopOrders(self, stopOrderId = None, brokerageId = None, investme
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatBoolean("only_pending", onlyPending, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     response = self.smarttFunction( filter(None, message), [
@@ -1189,7 +1200,7 @@ getTradesAttributes = [
     "other_taxes_cost"]
 
 
-def getTrades(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, offset = None, limit = None, returnAttributes = None):
+def getTrades(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, includeExternalOrders = None, offset = None, limit = None, returnAttributes = None):
     message = ["get_trades"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -1198,6 +1209,7 @@ def getTrades(self, orderId = None, brokerageId = None, investmentCode = None, i
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatBoolean("include_external_orders", includeExternalOrders, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getTradesAttributes)
@@ -1212,7 +1224,7 @@ getNumberOfTradesAttributes = [
     "number_of_trades"]
 
 
-def getNumberOfTrades(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, offset = None, limit = None):
+def getNumberOfTrades(self, orderId = None, brokerageId = None, investmentCode = None, initialDatetime = None, finalDatetime = None, marketName = None, stockCode = None, includeExternalOrders = None, offset = None, limit = None):
     message = ["get_number_of_trades"]
     message += self.formatInteger("order_id", orderId, optional=True)
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
@@ -1221,6 +1233,7 @@ def getNumberOfTrades(self, orderId = None, brokerageId = None, investmentCode =
     message += self.formatDatetime("final_datetime", finalDatetime, optional=True)
     message += self.formatString("market_name", marketName, optional=True)
     message += self.formatString("stock_code", stockCode, optional=True)
+    message += self.formatBoolean("include_external_orders", includeExternalOrders, optional=True)
     message += self.formatInteger("offset", offset, optional=True)
     message += self.formatInteger("limit", limit, optional=True)
     response = self.smarttFunction( filter(None, message), [
