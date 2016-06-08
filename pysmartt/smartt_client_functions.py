@@ -231,7 +231,11 @@ getClientAttributes = [
     "plan",
     "has_customized_strategies",
     "is_active",
-    "plan_expiration_date"]
+    "plan_expiration_date",
+    "number_of_robots_limit",
+    "bovespa_financial_volume_limit",
+    "bmef_contracts_limit",
+    "bmef_mini_contracts_limit"]
 
 
 def getClient(self, returnAttributes = None):
