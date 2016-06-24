@@ -948,7 +948,7 @@ insertBacktestingOrdersAttributes = [
     "order_id"]
 
 
-def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, price = None, entryExitOrReversal = None, reason = None, datetime = None, status = None, numberOfTradedStocks = None, averageNominalPrice = None):
+def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, orderType = None, marketName = None, stockCode = None, numberOfStocks = None, isMarketOrder = None, price = None, entryExitOrReversal = None, reason = None, datetime = None, status = None, numberOfTradedStocks = None, averageNominalPrice = None):
     message = ["insert_backtesting_orders"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("investment_code", investmentCode, optional=False)
@@ -956,7 +956,8 @@ def insertBacktestingOrders(self, brokerageId = None, investmentCode = None, ord
     message += self.formatString("market_name", marketName, optional=False)
     message += self.formatString("stock_code", stockCode, optional=False)
     message += self.formatInteger("number_of_stocks", numberOfStocks, optional=False)
-    message += self.formatDecimal2("price", price, optional=False)
+    message += self.formatBoolean("is_market_order", isMarketOrder, optional=True)
+    message += self.formatDecimal2("price", price, optional=True)
     message += self.formatString("entry_exit_or_reversal", entryExitOrReversal, optional=True)
     message += self.formatString("reason", reason, optional=True)
     message += self.formatDatetime("datetime", datetime, optional=True)
