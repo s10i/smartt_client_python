@@ -598,7 +598,8 @@ getInvestmentsAttributes = [
     "is_real",
     "initial_capital",
     "initial_datetime",
-    "final_datetime"]
+    "final_datetime",
+    "is_playable"]
 
 
 def getInvestments(self, brokerageId = None, code = None, returnAttributes = None):
