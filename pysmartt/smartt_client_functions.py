@@ -24,6 +24,10 @@ def setupSmarttFunctions(obj):
     obj.getClientNumbersAttributes = getClientNumbersAttributes
     obj.getActivatedBrokerages = getActivatedBrokerages
     obj.getActivatedBrokeragesAttributes = getActivatedBrokeragesAttributes
+    obj.getBrokerageOffices = getBrokerageOffices
+    obj.getBrokerageOfficesAttributes = getBrokerageOfficesAttributes
+    obj.insertBrokerageOffice = insertBrokerageOffice
+    obj.insertBrokerageOfficeAttributes = insertBrokerageOfficeAttributes
     obj.getClientBrokerages = getClientBrokerages
     obj.getClientBrokeragesAttributes = getClientBrokeragesAttributes
     obj.insertClientBrokerage = insertClientBrokerage
@@ -354,6 +358,55 @@ def getActivatedBrokerages(self, returnAttributes = None):
         "ss_s10i_data",
     ] )
     parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getActivatedBrokeragesAttributes)
+    return parsedResponse
+
+
+getBrokerageOfficesAttributes = [
+    "brokerage_id",
+    "brokerage_office_id",
+    "corporate_name",
+    "autonomous_agent_name",
+    "email",
+    "city",
+    "state",
+    "main_phone",
+    "secondary_phone",
+    "insertion_datetime",
+    "is_already_known",
+    "is_already_using"]
+
+
+def getBrokerageOffices(self, brokerageId = None, returnAttributes = None):
+    message = ["get_brokerage_offices"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatAttributes("return_attributes", returnAttributes, self.getBrokerageOfficesAttributes)
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
+    parsedResponse = self.formatListOfDictsResponse(response[0:], returnAttributes, self.getBrokerageOfficesAttributes)
+    return parsedResponse
+
+
+insertBrokerageOfficeAttributes = [
+    "message"]
+
+
+def insertBrokerageOffice(self, brokerageId = None, corporateName = None, autonomousAgentName = None, email = None, city = None, state = None, mainPhone = None, secondaryPhone = None, isAlreadyKnown = None, isAlreadyUsing = None):
+    message = ["insert_brokerage_office"]
+    message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatString("corporate_name", corporateName, optional=False)
+    message += self.formatString("autonomous_agent_name", autonomousAgentName, optional=True)
+    message += self.formatString("email", email, optional=False)
+    message += self.formatString("city", city, optional=True)
+    message += self.formatString("state", state, optional=True)
+    message += self.formatString("main_phone", mainPhone, optional=True)
+    message += self.formatString("secondary_phone", secondaryPhone, optional=True)
+    message += self.formatBoolean("is_already_known", isAlreadyKnown, optional=True)
+    message += self.formatBoolean("is_already_using", isAlreadyUsing, optional=True)
+    response = self.smarttFunction( filter(None, message), [
+        "ss_s10i_data",
+    ] )
+    parsedResponse = (response[0])
     return parsedResponse
 
 
