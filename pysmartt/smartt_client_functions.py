@@ -438,13 +438,14 @@ insertClientBrokerageAttributes = [
     "message"]
 
 
-def insertClientBrokerage(self, brokerageId = None, brokerageOfficeId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None):
+def insertClientBrokerage(self, brokerageId = None, brokerageOfficeId = None, cblcBovespaCode = None, cblcBmfCode = None, status = None, approvalDatetime = None):
     message = ["insert_client_brokerage"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatInteger("brokerage_office_id", brokerageOfficeId, optional=True)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
     message += self.formatString("status", status, optional=True)
+    message += self.formatDatetime("approval_datetime", approvalDatetime, optional=True)
     response = self.smarttFunction( filter(None, message), [
         "ss_s10i_data",
     ] )
@@ -456,11 +457,15 @@ updateClientBrokerageAttributes = [
     "message"]
 
 
-def updateClientBrokerage(self, brokerageId = None, cblcBovespaCode = None, cblcBmfCode = None):
+def updateClientBrokerage(self, brokerageId = None, brokerageOfficeId = None, cblcBovespaCode = None, cblcBmfCode = None, insertionDatetime = None, status = None, approvalDatetime = None):
     message = ["update_client_brokerage"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
+    message += self.formatInteger("brokerage_office_id", brokerageOfficeId, optional=True)
     message += self.formatString("cblc_bovespa_code", cblcBovespaCode, optional=True)
     message += self.formatString("cblc_bmf_code", cblcBmfCode, optional=True)
+    message += self.formatDatetime("insertion_datetime", insertionDatetime, optional=True)
+    message += self.formatString("status", status, optional=True)
+    message += self.formatDatetime("approval_datetime", approvalDatetime, optional=True)
     response = self.smarttFunction( filter(None, message), [
         "ss_s10i_data",
     ] )
