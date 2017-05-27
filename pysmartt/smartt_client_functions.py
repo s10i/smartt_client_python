@@ -373,12 +373,15 @@ getBrokerageOfficesAttributes = [
     "secondary_phone",
     "insertion_datetime",
     "is_already_known",
-    "is_already_using"]
+    "is_already_using",
+    "status",
+    "approval_datetime"]
 
 
-def getBrokerageOffices(self, brokerageId = None, returnAttributes = None):
+def getBrokerageOffices(self, brokerageId = None, status = None, returnAttributes = None):
     message = ["get_brokerage_offices"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=True)
+    message += self.formatString("status", status, optional=True)
     message += self.formatAttributes("return_attributes", returnAttributes, self.getBrokerageOfficesAttributes)
     response = self.smarttFunction( filter(None, message), [
         "ss_s10i_data",
@@ -391,7 +394,7 @@ insertBrokerageOfficeAttributes = [
     "message"]
 
 
-def insertBrokerageOffice(self, brokerageId = None, corporateName = None, autonomousAgentName = None, email = None, city = None, state = None, mainPhone = None, secondaryPhone = None, isAlreadyKnown = None, isAlreadyUsing = None):
+def insertBrokerageOffice(self, brokerageId = None, corporateName = None, autonomousAgentName = None, email = None, city = None, state = None, mainPhone = None, secondaryPhone = None, isAlreadyKnown = None, isAlreadyUsing = None, status = None, approvalDatetime = None):
     message = ["insert_brokerage_office"]
     message += self.formatInteger("brokerage_id", brokerageId, optional=False)
     message += self.formatString("corporate_name", corporateName, optional=False)
@@ -403,6 +406,8 @@ def insertBrokerageOffice(self, brokerageId = None, corporateName = None, autono
     message += self.formatString("secondary_phone", secondaryPhone, optional=True)
     message += self.formatBoolean("is_already_known", isAlreadyKnown, optional=True)
     message += self.formatBoolean("is_already_using", isAlreadyUsing, optional=True)
+    message += self.formatString("status", status, optional=True)
+    message += self.formatDatetime("approval_datetime", approvalDatetime, optional=True)
     response = self.smarttFunction( filter(None, message), [
         "ss_s10i_data",
     ] )
